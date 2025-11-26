@@ -83,6 +83,14 @@ public class Resident {
         this.bmi = bmi;
     }
 
+    public void addPreference(Preference preference){
+        this.preference.add(preference);
+    }
+
+    public void removePreference(Preference preference){
+        this.preference.remove(preference);
+    }
+
     public List<Preference> getPreference() {
         return preference;
     }
@@ -91,12 +99,28 @@ public class Resident {
         this.preference = preference;
     }
 
+    public void addDiet(Diet diet){
+        this.diet.add(diet);
+    }
+
+    public void removeDiet(Diet diet){
+        this.diet.remove(diet);
+    }
+
     public List<Diet> getDiet() {
         return diet;
     }
 
     public void setDiet(List<Diet> diet) {
         this.diet = diet;
+    }
+
+    public void addAllergy(Allergies allergies){
+        this.allergy.add(allergies);
+    }
+
+    public void removeAllergy(Allergies allergies){
+        this.allergy.remove(allergies);
     }
 
     public List<Allergies> getAllergy() {
