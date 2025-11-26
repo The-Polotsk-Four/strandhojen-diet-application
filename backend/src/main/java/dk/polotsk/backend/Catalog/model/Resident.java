@@ -29,6 +29,7 @@ public class Resident {
     private int floor;
     private int roomNumber;
     private boolean status;
+    private String comment;
 
 
     public Resident() {
@@ -128,5 +129,13 @@ public class Resident {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
