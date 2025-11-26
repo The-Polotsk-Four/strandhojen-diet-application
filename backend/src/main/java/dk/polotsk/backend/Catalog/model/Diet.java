@@ -9,26 +9,26 @@ public class Diet {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
-    private String allergy;
+    private String name;
 
     public Diet() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getAllergy() {
-        return allergy;
+    public String getName() {
+        return name;
     }
 
-    public void setAllergy(String allergy) {
-        this.allergy = allergy;
+    public void setName(String name) {
+        this.name = name;
     }
 }

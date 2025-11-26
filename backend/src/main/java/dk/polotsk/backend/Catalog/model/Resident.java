@@ -11,7 +11,7 @@ public class Resident {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private FoodConsisatency foodConsistency;
@@ -35,11 +35,11 @@ public class Resident {
     public Resident() {
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
