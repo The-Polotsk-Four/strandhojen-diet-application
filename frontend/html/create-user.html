@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <script defer src="../js/create-user.js"></script>
+    <link rel="stylesheet" href="../css/create-user.css">
+
+</head>
+<body>
+<div id="form-box">
+    <form id="create-user">
+        <p1>Indtast navn på medarbejder</p1><br>
+        <input type="text" id="name" name="name" placeholder="Sofie" required/><br>
+        <p1>Indtast login</p1><br>
+        <input type="text" id="login" name="login" required/><br>
+        <p1>Indtast password</p1><br>
+        <input type="password" id="password" name="password" required/><br>
+        <p1>Hvilken rolle har medarbejderen</p1>
+        <select name="role" id="role">
+            <option value="ADMIN">Admin</option>
+            <option value="SYGEPLEJERSKE">Sygeplejerske</option>
+            <option value="PLEJER">Plejer</option>
+            <option value="KØKKEN">Køkken</option>
+        </select><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
