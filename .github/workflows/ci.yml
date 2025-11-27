@@ -2,10 +2,10 @@ name: Docker CI
 on:
   push:
     branches:
-      - main
+      - gh-actions
   pull_request:
     branches:
-      - main
+      - gh-actions
 
 jobs:
   build:
@@ -16,6 +16,13 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t app:test ./backend/
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-${{ runner.os }}-
 
       - name: Run cd Docker container
         run: |
