@@ -53,7 +53,11 @@ public class Mapper {
                 resident.getComment());
     }
     public static UserDto toDto(User user){
-        return new UserDto(user.getId(), user.getUserrole(), user.getName());
+
+        return new UserDto(
+                user.getId(),
+                user.getUserrole(),
+                user.getName());
     }
     public static Allergies toEntity(AllergiesDto allergiesDto){
         Allergies allergies = new Allergies();
@@ -97,9 +101,12 @@ public class Mapper {
     }
 
 
-    public static User toEntity(UserDto userDto){
+    public static User toEntity(UserCreateDto createDto){
         User user = new User();
-        user.setId(userDto.id());
+        user.setLogin(createDto.login());
+        user.setPassword(createDto.password());
+        user.setUserrole(createDto.userrole());
+        user.setName(createDto.name());
         return user;
     }
 
