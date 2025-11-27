@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -18,15 +20,23 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-
+/*
+    @GetMapping
+    public ResponseEntity<UserDto> getUsers(
+            @RequestParam(value = "login", required = false) String login){
+        if (login != null) {
+            return ResponseEntity.ok(userService.getUserByLogin(login);
+        }
+        return ResponseEntity.ok(userService.getUserByLogin());
+    }
+ */
 
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDto dto){
         return ResponseEntity.ok(userService.createUser(dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete")
     public ResponseEntity<UserDto> deleteUser(@PathVariable Long id){
         try {
             userService.deleteUser(id);
