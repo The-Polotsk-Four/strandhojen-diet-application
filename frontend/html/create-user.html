@@ -12,7 +12,15 @@
 <div id="form-box">
     <form id="create-user">
         <p1>Indtast navn på medarbejder</p1><br>
-        <input type="text" id="name" name="name" placeholder="Sofie" required/><br>
+        <input type="text"
+               id="name"
+               name="name"
+               placeholder="Sofie"
+               pattern="[A-Za-zÆØÅæøå ]+"
+               required
+               oninvalid="this.setCustomValidity('Navn må kun indeholde bogstaver')"
+               oninput="this.setCustomValidity('')" />
+        <br>
         <p1>Indtast login</p1><br>
         <input type="text" id="login" name="login" required/><br>
         <p1>Indtast password</p1><br>
