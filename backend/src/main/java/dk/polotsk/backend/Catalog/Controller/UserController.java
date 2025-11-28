@@ -20,16 +20,18 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-/*
-    @GetMapping
+
+    /*@GetMapping
     public ResponseEntity<UserDto> getUsers(
             @RequestParam(value = "login", required = false) String login){
         if (login != null) {
-            return ResponseEntity.ok(userService.getUserByLogin(login);
+            return ResponseEntity.ok(userService.getUserByLogin());
         }
-        return ResponseEntity.ok(userService.getUserByLogin());
+        return ResponseEntity.ok(userService.getByUserLogin());
     }
- */
+
+     */
+
 
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDto dto){

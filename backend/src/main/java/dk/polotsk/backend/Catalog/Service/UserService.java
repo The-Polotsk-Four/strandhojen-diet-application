@@ -28,19 +28,21 @@ public class UserService {
     public User getUserByLogin(String login){
         return userRepository.findUserByLogin(login);
     }
-
-    /*public List<UserDto> getByUserLogin(String login){
-        List<User> users = userRepository.findUserByLogin(login);
+/*
+    public List<UserDto> getByUserLogin(String login){
+        List<UserDto> users = userRepository.findUserByLogin(login);
         if (users.isEmpty()){
             throw new RuntimeException("Can't find user with login "+login);
         }
         List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users){
-            userDtos.add(Mapper.toDto(user));
+        for (UserDto user : users){
+            userDtos.add(Mapper.toDto(users));
         }
         return userDtos;
     }
-     */
+
+ */
+
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
