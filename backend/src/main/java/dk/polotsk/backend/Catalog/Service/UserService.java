@@ -16,6 +16,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    public List<UserDto> getAllUsers(){
+        List<UserDto> userDtos = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+        for (User user : users){
+            userDtos.add(Mapper.toDto(user));
+        }
+        return userDtos;
+    }
+
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -25,23 +34,19 @@ public class UserService {
         return Mapper.toDto(user);
     }
 
-    public User getUserByLogin(String login){
-        return userRepository.findUserByLogin(login);
-    }
-/*
+
+
     public List<UserDto> getByUserLogin(String login){
-        List<UserDto> users = userRepository.findUserByLogin(login);
+        List<User> users = userRepository.findUserByLogin(login);
         if (users.isEmpty()){
             throw new RuntimeException("Can't find user with login "+login);
         }
         List<UserDto> userDtos = new ArrayList<>();
-        for (UserDto user : users){
-            userDtos.add(Mapper.toDto(users));
+        for (User user : users){
+            userDtos.add(Mapper.toDto(user));
         }
         return userDtos;
     }
-
- */
 
 
     public void deleteUser(Long id) {

@@ -21,16 +21,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    /*@GetMapping
-    public ResponseEntity<UserDto> getUsers(
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getUsers(
             @RequestParam(value = "login", required = false) String login){
         if (login != null) {
-            return ResponseEntity.ok(userService.getUserByLogin());
+            return ResponseEntity.ok(userService.getByUserLogin(login));
         }
-        return ResponseEntity.ok(userService.getByUserLogin());
+        return ResponseEntity.ok(userService.getByUserLogin(login));
     }
 
-     */
+
 
 
     @PostMapping("/create")
@@ -38,13 +38,13 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(dto));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id){
         try {
             userService.deleteUser(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new RuntimeException(e.getMessage());
         }
     }
 }
