@@ -29,10 +29,6 @@ public class UserController {
         }
         return ResponseEntity.ok(userService.getByUserLogin(login));
     }
-
-
-
-
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDto dto){
         return ResponseEntity.ok(userService.createUser(dto));
