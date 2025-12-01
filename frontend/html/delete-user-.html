@@ -2,22 +2,30 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Slet bruger</title>
+    <title>Bruger Administration</title>
     <link rel="stylesheet" href="../css/delete-user.css">
-    <script src="../js/delete-user.js"></script>
-
-
 </head>
 <body>
+<h2>Brugeradministration</h2>
 
-<h2>Slet en bruger</h2>
+<input type="text" id="searchInput">
+<button id="searchBtn">Søg</button>
 
-<label for="userId">Bruger ID:</label>
-<input type="number" id="userId">
+<table id="userTable" border="1" cellspacing="0" cellpadding="5">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>Navn</th>
+        <th>Rolle</th>
+        <th>Slet</th>
+    </tr>
+    </thead>
+    <tbody id="userTableBody">
+    </tbody>
+</table>
 
-<button id="deleteBtn">Slet bruger</button>
-
-<div id="result"></div>
+<script src="../js/delete-user.js"></script>
 
 </body>
 </html>

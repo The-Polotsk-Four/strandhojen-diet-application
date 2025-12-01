@@ -27,7 +27,7 @@ public class UserController {
         if (login != null) {
             return ResponseEntity.ok(userService.getByUserLogin(login));
         }
-        return ResponseEntity.ok(userService.getByUserLogin(login));
+        return ResponseEntity.ok(userService.getAllUsers());
     }
     @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDto dto){
