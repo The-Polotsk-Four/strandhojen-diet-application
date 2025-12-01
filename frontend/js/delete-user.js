@@ -11,6 +11,8 @@ async function initApp() {
     renderUsers(users);
 
     document.getElementById("searchBtn").addEventListener("click", searchUsers);
+
+    console.log(users)
 }
 
 async function fetchUsers() {
