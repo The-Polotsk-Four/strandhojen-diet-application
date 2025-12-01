@@ -22,15 +22,31 @@ public class ResidentService {
         return Mapper.toDto(residentRepository.save(resident));
     }
 
-    public ResidentDto updateResident(Long id, ResidentDto residentDto) {
+    public ResidentDto updateResident(Long id, ResidentDto dto) {
         Resident existing = residentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resident not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Resident not found"));
 
-        Resident updated = Mapper.toEntity(residentDto);
-        updated.setId(id); // ensure the ID is preserved
+        existing.setFoodConsistency(dto.foodConsisatency());
+        existing.setAge(dto.age());
+        existing.setWeight(dto.weight());
+        existing.setHeight(dto.height());
+        existing.setBmi(dto.bmi());
+        existing.setFloor(dto.floor());
+        existing.setRoomNumber(dto.roomNumber());
+        existing.setStatus(dto.status());
+        existing.setComment(dto.comment());
 
-        return Mapper.toDto(residentRepository.save(updated));
+        existing.getPreference().clear();
+        existing.getDiet().clear();
+        existing.getAllergy().clear();
+
+        dto.preference().forEach(p -> existing.addPreference(Mapper.toEntity(p)));
+        dto.diet().forEach(d -> existing.addDiet(Mapper.toEntity(d)));
+        dto.allergies().forEach(a -> existing.addAllergy(Mapper.toEntity(a)));
+
+        return Mapper.toDto(residentRepository.save(existing));
     }
+
 
     public ResidentDto getResident(Long id) {
         Resident resident = residentRepository.findById(id)

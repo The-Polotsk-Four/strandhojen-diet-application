@@ -17,10 +17,17 @@ public ResidentController(ResidentService residentService) {
     this.residentService = residentService;
 }
 
-@PostMapping
-    public ResponseEntity<ResidentDto> create  (@RequestBody ResidentDto residentDto){
+@PostMapping("/create")
+    public ResponseEntity<ResidentDto> create(@RequestBody ResidentDto residentDto){
     return ResponseEntity.ok(residentService.createResident(residentDto));
 }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ResidentDto> update(
+            @PathVariable Long id,
+            @RequestBody ResidentDto residentDto) {
+    return ResponseEntity.ok(residentService.updateResident(id, residentDto));
+    }
 
 @GetMapping("/{id}")
     public ResponseEntity<ResidentDto> getById(@PathVariable Long id){
