@@ -26,7 +26,7 @@ jobs:
       - name: Run Docker container
         run: |
           # Run the container in detached mode
-          docker run -d -p 8080:8080 --name test-container app:test
+          docker run -d -p 8090:8080 --name test-container app:test
           
           # Wait for a few seconds to ensure the container is up and running
           sleep 20
