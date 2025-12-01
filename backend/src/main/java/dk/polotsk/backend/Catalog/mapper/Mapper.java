@@ -94,7 +94,7 @@ public class Mapper {
             resident.addAllergy(toEntity(allergiesDto));
         }
         resident.setFloor(residentDto.floor());
-        resident.setRoomNumber(residentDto.floor());
+        resident.setRoomNumber(residentDto.roomNumber());
         resident.setStatus(residentDto.status());
         resident.setComment(residentDto.comment());
 
