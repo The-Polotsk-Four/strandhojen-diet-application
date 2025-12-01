@@ -1,7 +1,6 @@
 package dk.polotsk.backend;
 
-import dk.polotsk.backend.Catalog.model.Message;
-import dk.polotsk.backend.Catalog.repository.MessageRepository;
+//import dk.polotsk.backend.Catalog.model.Message;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -39,20 +38,20 @@ public class BackendApplication {
     }
 
     // COMMANDLINE RUNNER
-    @Bean
-    CommandLineRunner commandLineRunner(MessageRepository messageRepository) {
-        return args -> {
-            System.out.println("---------------");
-            System.out.println("Initializing Database using CommandLineRunner");
-
-            if (messageRepository.count() > 0) {
-                return;
-            }
-            Message msg1 = new Message("Hello, Docker!");
-            Message msg2 = new Message("Hello, Spring Boot!");
-            Message msg3 = new Message("Hello, MySQL!");
-            messageRepository.saveAll(List.of(msg1, msg2, msg3));
-        };
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(MessageRepository messageRepository) {
+//        return args -> {
+//            System.out.println("---------------");
+//            System.out.println("Initializing Database using CommandLineRunner");
+//
+//            if (messageRepository.count() > 0) {
+//                return;
+//            }
+//            Message msg1 = new Message("Hello, Docker!");
+//            Message msg2 = new Message("Hello, Spring Boot!");
+//            Message msg3 = new Message("Hello, MySQL!");
+//            messageRepository.saveAll(List.of(msg1, msg2, msg3));
+//        };
+//    }
 
 }
