@@ -57,6 +57,7 @@ public class Mapper {
         return new UserDto(
                 user.getId(),
                 user.getUserrole(),
+                user.getLogin(),
                 user.getName());
     }
     public static Allergies toEntity(AllergiesDto allergiesDto){
@@ -93,7 +94,7 @@ public class Mapper {
             resident.addAllergy(toEntity(allergiesDto));
         }
         resident.setFloor(residentDto.floor());
-        resident.setRoomNumber(residentDto.floor());
+        resident.setRoomNumber(residentDto.roomNumber());
         resident.setStatus(residentDto.status());
         resident.setComment(residentDto.comment());
 
