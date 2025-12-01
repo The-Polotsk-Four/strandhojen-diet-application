@@ -41,18 +41,18 @@ services:
       retries: 2
       start_period: 10s
 
-  frontend:
-    container_name: strandhojen-frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    depends_on:
-      - backend
-    ports:
-      - "8090:80"
-    networks:
-      app-network:
-    restart: unless-stopped
+#  frontend:
+#    container_name: strandhojen-frontend
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - backend
+#    ports:
+#      - "8090:8090"
+#    networks:
+#      app-network:
+#    restart: unless-stopped
 
 
 volumes:
