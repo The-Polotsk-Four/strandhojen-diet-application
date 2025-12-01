@@ -1,12 +1,4 @@
 services:
-#  frontend:
-#    build:
-#      context: ./backend
-#      dockerfile: Dockerfile
-#    ports:
-#      - "127.0.0.1:8080:8080"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
   db:
     container_name: strandhojen-db
     image: mysql:8.0
@@ -34,11 +26,6 @@ services:
       dockerfile: Dockerfile
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-#      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-#      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-#      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-#      SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-#      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:
@@ -62,7 +49,7 @@ services:
     depends_on:
       - backend
     ports:
-      - "8080:80"
+      - "8090:80"
     networks:
       app-network:
     restart: unless-stopped

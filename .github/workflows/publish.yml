@@ -2,10 +2,10 @@ name: Publish to GHCR
 on:
   push:
     branches:
-      - gh-actions
+      - main
   pull_request:
     branches:
-      - gh-actions
+      - main
 
 jobs:
   build:
