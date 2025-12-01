@@ -57,6 +57,7 @@ public class Mapper {
         return new UserDto(
                 user.getId(),
                 user.getUserrole(),
+                user.getLogin(),
                 user.getName());
     }
     public static Allergies toEntity(AllergiesDto allergiesDto){
