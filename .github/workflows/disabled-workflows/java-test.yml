@@ -1,0 +1,33 @@
+name: Java test
+
+on:
+  push:
+    branches:
+      - gh-actions
+  pull_request:
+    branches:
+      - gh-actions
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Set up JDK
+        uses: actions/setup-java@4e7e684fbb6e33f88ecb2cf1e6b3797739cf499b
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-${{ runner.os }}-
+
+      - name: Run tests
+        run: cd ./backend && mvn test

@@ -1,0 +1,39 @@
+name: Publish to GHCR
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - name: Build Docker image
+        run: docker build -t app:test ./backend/
+
+      - name: Cache Maven packages
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: maven-${{ runner.os }}-
+
+      - name: Run Docker container
+        run: |
+          # Run the container in detached mode
+          docker run -d -p 8080:8080 --name test-container app:test
+          
+          # Wait for a few seconds to ensure the container is up and running
+          sleep 20
+
+          # Test the application endpoint
+          curl -f http://localhost:8080/actuator/health || exit 1
+
+          # Stop and remove the container
+          docker stop test-container
+          docker rm test-container
