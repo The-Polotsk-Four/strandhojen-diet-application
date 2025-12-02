@@ -13,13 +13,23 @@ public class Resident {
     @GeneratedValue
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private FoodConsisatency foodConsistency;
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
     private LocalDate age;
     private double weight;
     private double height;
     private double bmi;
+
+    @Enumerated(EnumType.STRING)
+    private FoodConsisatency foodConsistency;
+
     @OneToMany
     private List<Preference> preference;
     @OneToMany

@@ -39,6 +39,7 @@ public class Mapper {
             preferences.add(toDto(preference));
         }
         return new ResidentDto(resident.getId(),
+                resident.getName(),
                 resident.getFoodConsistency(),
                 resident.getAge(),
                 resident.getWeight(),
@@ -79,6 +80,7 @@ public class Mapper {
     public static Resident toEntity(ResidentDto residentDto){
         Resident resident = new Resident();
         resident.setId(residentDto.id());
+        resident.setName(residentDto.name());
         resident.setFoodConsistency(residentDto.foodConsisatency());
         resident.setAge(residentDto.age());
         resident.setWeight(residentDto.weight());
