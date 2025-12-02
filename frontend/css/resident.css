@@ -12,38 +12,39 @@ body {
 
 .form-box {
     background: white;
-    padding: 30px;
-    width: 350px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    padding: 40px 60px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     text-align: center;
 }
 
-
-form input,
-form select,
-form textarea,
-form button,
-button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 8px;
-    box-sizing: border-box;
+.form-box h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
 }
 
-
 form button,
 button {
-    margin-top: 15px;
+    width: 250px;
+    hight: 100px;
+    padding: 15px 0;
+    margin: 10px 0;
     cursor: pointer;
-    background: #0077cc;
+    background-color: #82d18d;
     color: white;
     border: none;
-    border-radius: 5px;
+    font-size: 18px;
+    border-radius: 6px;
+    transition: background 0.3s, transition 0.2s;
 }
 
 
-form button:hover,
-button:hover {
-    background: #005fa3;
+.form-box button:hover {
+    background-color: #96e8a2;
+    transform: translateY(-2px);
+}
+
+.form-box button:focus {
+    outline: none;
 }

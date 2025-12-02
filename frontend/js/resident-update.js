@@ -1,10 +1,13 @@
 const API = "http://localhost:8080/api/residents";
 
-async function opretBeboer(event) {
+async function opdaterBeboer(event) {
     event.preventDefault();
 
+    const id = Number(document.getElementById("residentId").value);
+
     const resident = {
-        FoodConsisatency: document.getElementById("foodConsistency").value,
+        id: id,
+        foodConsisatency: document.getElementById("foodConsistency").value,
         age: document.getElementById("age").value,
         weight: Number(document.getElementById("weight").value),
         height: Number(document.getElementById("height").value),
@@ -18,14 +21,14 @@ async function opretBeboer(event) {
         comment: document.getElementById("comment").value
     };
 
-    const res = await fetch(`${API}/create`, {
-        method: "POST",
+    const res = await fetch(`${API}/update/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(resident)
     });
 
-    if (!res.ok) return alert("Fejl ved oprettelse");
+    if (!res.ok) return alert("Fejl ved opdatering");
 
-    alert("Beboer oprettet!");
-    document.getElementById("createForm").reset();
+    alert("Beboer opdateret!");
+    document.getElementById("updateForm").reset();
 }

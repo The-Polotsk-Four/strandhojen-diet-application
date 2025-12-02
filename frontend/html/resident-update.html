@@ -4,29 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Opdater Beboer</title>
-    <link rel="stylesheet" href="/css/resident.css" />
+    <link rel="stylesheet" href="/css/resident-update.css" />
 </head>
 <body>
 <div class="form-box">
     <h1>Opdater Beboer</h1>
     <form id="updateForm" onsubmit="opdaterBeboer(event)">
-        <label>Beboer ID</label>
-        <input type="number" id="residentId" required />
 
-        <label>Fødevarens konsistens</label>
-        <input type="text" id="foodConsistency" required />
+        <label> Fornavn </label>
+        <input type="text" id="firstName" required />
 
         <label>Alder (YYYY-MM-DD)</label>
         <input type="text" id="age" required />
 
         <label>Vægt</label>
-        <input type="number" id="weight" required />
+        <input type="number" id="weight" />
 
         <label>Højde</label>
-        <input type="number" id="height" required />
-
-        <label>BMI</label>
-        <input type="number" id="bmi" required />
+        <input type="number" id="height" />
 
         <label>Etage</label>
         <input type="number" id="floor" required />
@@ -34,11 +29,11 @@
         <label>Værelsesnummer</label>
         <input type="number" id="roomNumber" required />
 
-        <label>Status</label>
-        <select id="status">
-            <option value="true">Aktiv</option>
-            <option value="false">Inaktiv</option>
-        </select>
+        <label>Fødevarens konsistens</label>
+        <input type="text" id="foodConsistency" required />
+
+        <label>Preference</label>
+        <input type="text" id="preference" />
 
         <label>Kommentar</label>
         <textarea id="comment"></textarea>
