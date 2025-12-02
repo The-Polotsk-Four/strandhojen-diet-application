@@ -1,4 +1,5 @@
-window.addEventListener(initApp())
+window.addEventListener("DOMContentLoaded",initApp);
+
 const API_BASE = 'http://localhost:8080';
 
 async function initApp() {
@@ -10,6 +11,7 @@ async function initApp() {
         console.log('Logged in as:', user.username);
         document.getElementById('username-display').textContent = user.username;
     }
+}
 
 
 
@@ -38,5 +40,5 @@ async function getCurrentUser() {
     }
 }
 
-}
+
 

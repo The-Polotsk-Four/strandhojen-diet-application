@@ -28,12 +28,18 @@ async function login(e) {
             password: form.password.value
         })
     });
+    if (!resp.ok){
+        console.error("Cant find user");
+        alert("Invalid username or password");
+        return
+    }
+
 
     const data = await resp.json();
-
-    form.reset();
-
     console.log(data);
 
-    // if (data === )
+
+
+
+    form.reset();
 }
