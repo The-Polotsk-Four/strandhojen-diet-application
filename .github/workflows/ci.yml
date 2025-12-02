@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - gh-actions
+      - main
   pull_request:
     branches:
-      - gh-actions
+      - main
   workflow_dispatch:
 
 jobs:
