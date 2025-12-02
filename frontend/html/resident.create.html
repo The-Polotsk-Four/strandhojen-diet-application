@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opret Beboer</title>
+    <link rel="stylesheet" href="/css/resident.css" />
+</head>
+<body>
+<div class="form-box">
+    <h1>Opret Beboer</h1>
+    <form id="createForm" onsubmit="opretBeboer(event)">
+
+        <label> Fornavn </label>
+        <input type="text" id="firstName" required />
+
+        <label>Alder (YYYY-MM-DD)</label>
+        <input type="text" id="age" required />
+
+        <label>Vægt</label>
+        <input type="number" id="weight" />
+
+        <label>Højde</label>
+        <input type="number" id="height" />
+
+        <label>Etage</label>
+        <input type="number" id="floor" required />
+
+        <label>Værelsesnummer</label>
+        <input type="number" id="roomNumber" required />
+
+        <label>Fødevarens konsistens</label>
+        <input type="text" id="foodConsistency" required />
+
+        <label>Preference</label>
+        <input type="text" id="preference" />
+
+        <label>Kommentar</label>
+        <textarea id="comment"></textarea>
+
+        <button type="submit">Opret</button>
+    </form>
+    <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
+</div>
+<script src="/js/resident-create.js"></script>
+</body>
+</html>

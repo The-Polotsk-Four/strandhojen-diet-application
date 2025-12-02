@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record ResidentDto(Long id,
+                          String name,
                           FoodConsisatency foodConsisatency,
                           LocalDate age,
                           double weight,

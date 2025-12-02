@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Beboer</title>
+    <link rel="stylesheet" href="/css/resident.css" />
+</head>
+<body>
+<div class="form-box">
+    <h1>Find Beboer</h1>
+    <form id="findForm" onsubmit="findBeboer(event)">
+        <label>Beboer ID</label>
+        <input type="number" id="searchId" required />
+        <button type="submit">Find</button>
+    </form>
+    <div id="result"></div>
+    <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
+</div>
+<script src="find.js"></script>
+</body>
+</html>
