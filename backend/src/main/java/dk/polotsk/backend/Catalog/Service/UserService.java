@@ -36,6 +36,9 @@ public class UserService {
 
     public UserDto createUser(UserCreateDto dto) {
         User user = Mapper.toEntity(dto);
+//        if (userRepository.existsByLogin(user.getLogin())){
+//            throw new IllegalStateException("User already exists");
+//        }
         user.setPassword(passwordEncoder.encode(dto.password()));
         user = userRepository.save(user);
         return Mapper.toDto(user);
