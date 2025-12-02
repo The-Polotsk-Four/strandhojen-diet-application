@@ -30,11 +30,14 @@ async function initapp(){
      });
 
 
-     if (!resp.ok){
-        console.error("Error creating user");
-    }
+     if (!resp.ok) {
+         const msg = await resp.text();
+         document.getElementById("error-message").textContent = msg;
+         return;
+     }
 
-    const data = await resp.json();
+     document.getElementById("error-message").textContent = "";
+     const data = await resp.json();
 
     console.log(data);
     form.reset();

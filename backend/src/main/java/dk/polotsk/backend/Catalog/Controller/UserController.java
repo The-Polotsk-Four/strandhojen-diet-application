@@ -2,9 +2,11 @@ package dk.polotsk.backend.Catalog.Controller;
 
 
 import dk.polotsk.backend.Catalog.Service.UserService;
+import dk.polotsk.backend.Catalog.dto.ErrorDto;
 import dk.polotsk.backend.Catalog.dto.UserCreateDto;
 import dk.polotsk.backend.Catalog.dto.UserDto;
 import dk.polotsk.backend.Catalog.model.User;
+import dk.polotsk.backend.Catalog.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,9 +20,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -31,8 +35,16 @@ public class UserController {
         }
         return ResponseEntity.ok(userService.getAllUsers());
     }
+
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody UserCreateDto dto){
+    public ResponseEntity<?> createUser(@RequestBody UserCreateDto dto){
+
+        if (userRepository.existsByLogin(dto.login())){
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(new ErrorDto("Der findes allerede en bruger med dette Login"));
+        }
+
         return ResponseEntity.ok(userService.createUser(dto));
     }
 

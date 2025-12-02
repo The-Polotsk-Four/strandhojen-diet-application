@@ -14,6 +14,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Userrole userrole;
 
+    @Column(unique = true)
     private String login;
     private String password;
     private String name;
