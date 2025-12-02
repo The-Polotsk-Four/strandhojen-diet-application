@@ -2,12 +2,15 @@
 package dk.polotsk.backend.Catalog.Controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +21,18 @@ import java.util.Map;
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
+    private final SecurityContextRepository securityContextRepository;
 
-    public LoginController(AuthenticationManager authenticationManager) {
+    public LoginController(AuthenticationManager authenticationManager,
+                           SecurityContextRepository securityContextRepository) {
         this.authenticationManager = authenticationManager;
+        this.securityContextRepository = securityContextRepository;
     }
 
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
         try {
             String username = credentials.get("username");
             String password = credentials.get("password");
@@ -33,9 +41,13 @@ public class LoginController {
                     new UsernamePasswordAuthenticationToken(username, password)
             );
 
-            // Store authentication in SecurityContext and ensure session is created
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            request.getSession(true);
+            // Create SecurityContext and save it explicitly
+            SecurityContext context = SecurityContextHolder.createEmptyContext();
+            context.setAuthentication(authentication);
+            SecurityContextHolder.setContext(context);
+
+            // Save the security context to the session
+            securityContextRepository.saveContext(context, request, response);
 
             return ResponseEntity.ok(Map.of(
                     "message", "Login successful",
