@@ -5,6 +5,7 @@ import dk.polotsk.backend.Catalog.dto.UserDto;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.User;
 import dk.polotsk.backend.Catalog.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,13 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     public List<UserDto> getAllUsers(){
         List<UserDto> userDtos = new ArrayList<>();
@@ -25,12 +33,11 @@ public class UserService {
         return userDtos;
     }
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public UserDto createUser(UserCreateDto dto) {
-        User user = userRepository.save(Mapper.toEntity(dto));
+        User user = Mapper.toEntity(dto);
+        user.setPassword(passwordEncoder.encode(dto.password()));
+        user = userRepository.save(user);
         return Mapper.toDto(user);
     }
 

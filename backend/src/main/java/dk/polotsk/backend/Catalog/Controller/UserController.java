@@ -7,6 +7,8 @@ import dk.polotsk.backend.Catalog.dto.UserDto;
 import dk.polotsk.backend.Catalog.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,4 +45,26 @@ public class UserController {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @GetMapping("/current")
+    public ResponseEntity<?> getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() ||
+                authentication.getPrincipal().equals("anonymousUser")){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String username= authentication.getName();
+        List<UserDto> users = userService.getByUserLogin(username);
+
+        if (users.isEmpty()){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok(users.get(0));
+
+    }
+
+
 }
