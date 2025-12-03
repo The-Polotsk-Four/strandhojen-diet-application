@@ -30,10 +30,20 @@
         <input type="number" id="roomNumber" required />
 
         <label>Fødevarens konsistens</label>
-        <input type="text" id="FoodConsisatenc" required />
+        <select id="foodConsistency" required>
+            <option value="SOLID">Solid</option>
+            <option value="SOFTFOOD">Softfood</option>
+            <option value="TUBEFEEDING">Tubefeeding</option>
+        </select>
 
-        <label>Preference</label>
-        <input type="text" id="preference" />
+        <label>Preference (komma-separeret)</label>
+        <input type="text" id="preference"  placeholder="fx Glutenfri,Vegetar"  />
+
+        <label>Diet (komma-separeret)</label>
+        <input type="text" id="diets" placeholder="fx Lavkalorie,Keto" />
+
+        <label>Allergies (komma-separeret)</label>
+        <input type="text" id="allergies" placeholder="fx Nødder,Skaldyr" />
 
         <label>Kommentar</label>
         <textarea id="comment"></textarea>

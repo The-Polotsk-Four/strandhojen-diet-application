@@ -62,17 +62,17 @@ public class Mapper {
     }
     public static Allergies toEntity(AllergiesDto allergiesDto){
         Allergies allergies = new Allergies();
-        allergies.setId(allergiesDto.id());
+        allergies.setId(allergiesDto.id());allergies.setName(allergiesDto.name());
         return allergies;
     }
     public static Diet toEntity(DietDto dietDto){
         Diet diet = new Diet();
-        diet.setId(dietDto.id());
+        diet.setId(dietDto.id()); diet.setName(dietDto.name());
         return diet;
     }
     public static Preference toEntity(PreferenceDto preferenceDto){
         Preference preference = new Preference();
-        preference.setId(preferenceDto.id());
+        preference.setId(preferenceDto.id()); preference.setName(preferenceDto.name());
         return preference;
     }
 

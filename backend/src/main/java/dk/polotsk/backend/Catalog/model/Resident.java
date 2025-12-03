@@ -3,6 +3,7 @@ package dk.polotsk.backend.Catalog.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -31,11 +32,11 @@ public class Resident {
     private FoodConsisatency foodConsistency;
 
     @OneToMany
-    private List<Preference> preference;
+    private List<Preference> preference= new ArrayList<>();
     @OneToMany
-    private List<Diet> diet;
+    private List<Diet> diet = new ArrayList<>();
     @OneToMany
-    private List<Allergies> allergy;
+    private List<Allergies> allergy = new ArrayList<>();
     private int floor;
     private int roomNumber;
     private boolean status;
