@@ -29,7 +29,7 @@ public class Resident {
     private double bmi;
 
     @Enumerated(EnumType.STRING)
-    private foodconsistency foodconsistency;
+    private FoodConsistency foodconsistency;
 
     @OneToMany
     private List<Preference> preference= new ArrayList<>();
@@ -54,11 +54,11 @@ public class Resident {
         this.id = id;
     }
 
-    public foodconsistency getFoodConsistency() {
+    public FoodConsistency getFoodConsistency() {
         return foodconsistency;
     }
 
-    public void setFoodConsistency(foodconsistency foodConsistency) {
+    public void setFoodConsistency(FoodConsistency foodConsistency) {
         this.foodconsistency = foodConsistency;
     }
 

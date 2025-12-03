@@ -1,6 +1,6 @@
 package dk.polotsk.backend.Catalog.model;
 
-public enum foodconsistency {
+public enum FoodConsistency {
     SOLID,
     TUBEFEEDING,
     SOFTFOOD

@@ -81,7 +81,7 @@ public class Mapper {
         Resident resident = new Resident();
         resident.setId(residentDto.id());
         resident.setName(residentDto.name());
-        resident.setFoodConsistency(residentDto.foodConsisatency());
+        resident.setFoodConsistency(residentDto.FoodConsistency());
         resident.setAge(residentDto.age());
         resident.setWeight(residentDto.weight());
         resident.setHeight(residentDto.height());
