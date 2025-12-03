@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", initApp);
 
-const loginUrl = "http://localhost:8080/login"
+const loginUrl = "http://localhost:8080/api/login"
 
 async function initApp(){
 
