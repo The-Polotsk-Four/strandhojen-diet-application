@@ -30,7 +30,7 @@ async function opretBeboer(event) {
     const residentData = {
         id: null,
         name: name,
-        foodConsisatency: foodConsistency,
+        foodConsistency: foodConsistency,
         age: age,
         weight: weight,
         height: height,
