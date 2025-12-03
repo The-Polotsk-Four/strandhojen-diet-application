@@ -27,8 +27,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**", "/api/**", "/login", "/actuator/**")
+                        .ignoringRequestMatchers("/h2-console/**", "/api/**", "/login", "/actuator/**", "/logout")
                 )
+//                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.sameOrigin())
                 )

@@ -1,4 +1,5 @@
-window.addEventListener("DOMContentLoaded",initApp);
+window.addEventListener("DOMContentLoaded", initApp);
+
 
 const API_BASE = 'http://localhost:8080';
 
