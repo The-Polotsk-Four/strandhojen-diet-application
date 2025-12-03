@@ -8,8 +8,7 @@ async function initApp() {
     if (!user) {
         window.location.href = 'login.html';
     } else {
-        console.log('Logged in as:', user.username);
-        document.getElementById('username-display').textContent = user.username;
+        console.log('Logged in as:', user.login);
     }
 }
 
