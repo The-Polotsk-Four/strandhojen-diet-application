@@ -22,3 +22,44 @@ table {
 td, th {
     padding: 8px;
 }
+
+#allergySection {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+
+  .tag {
+      display: inline-flex;
+      background: #e0e0e0;
+      padding: 6px 12px;
+      margin: 5px;
+      border-radius: 15px;
+      align-item: center;
+  }
+
+  .tag button {
+      margin-left: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+  }
+
+  #dropdown {
+      border: 1px solid #ccc;
+      background: white;
+      width: 250px;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      position: absolute;
+  }
+
+  .dropdown-item {
+      padding: 8px;
+      cursor: pointer;
+  }
+
+  .dropdown-item:hover {
+      background: #f0f0f0;
+  }
