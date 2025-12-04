@@ -29,17 +29,17 @@ public class Resident {
     private double bmi;
 
     @Enumerated(EnumType.STRING)
-    private FoodConsistency foodconsistency;
+    private FoodConsistency foodconsistency = FoodConsistency.SOLID;
 
     @OneToMany
-    private List<Preference> preference= new ArrayList<>();
+    private List<Preference> preference = new ArrayList<>();
     @OneToMany
     private List<Diet> diet = new ArrayList<>();
     @OneToMany
     private List<Allergies> allergy = new ArrayList<>();
     private int floor;
     private int roomNumber;
-    private boolean status;
+    private boolean status = true;
     private String comment;
 
 
@@ -92,6 +92,11 @@ public class Resident {
 
     public void setBmi(double bmi) {
         this.bmi = bmi;
+    }
+
+    public double calculateBmi() {
+        this.bmi = this.weight/(Math.pow(this.weight, 2));
+        return this.bmi;
     }
 
     public void addPreference(Preference preference){
