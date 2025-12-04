@@ -1,10 +1,22 @@
-let resident = [];
+window.addEventListener("DOMContentLoaded", initApp);
+
+
+const API = "http://localhost:8080";
+
+function initApp() {
+    loadResidents();
+    loadAllergies();
+}
+let residents = [];
 let allAllergies = [];
-let selectResident = null;
-let selectAllergies = [];
+let selectedResident = null;
+let selectedAllergies = [];
+
+
+
 
 async function loadResidents() {
-    const res = await fetch("/api/residents");
+    const res = await fetch(`${API}/api/residents`);
     residents = await res.json();
     renderResidents(residents);
 }
@@ -14,6 +26,11 @@ function renderResidents(list) {
     tbody.innerHTML = "";
 
     list.forEach(r => {
+
+        const allergyNames = r.allergies && r.allergies.length > 0
+            ? r.allergies.map(a => a.name).join(", ")
+            : "Ingen";
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${r.id}</td>
@@ -25,28 +42,29 @@ function renderResidents(list) {
             <td>${r.floor}</td>
             <td>${r.roomNumber}</td>
             <td>${r.status ? "Aktiv" : "Inaktiv"}</td>
-           `;
+            <td>${allergyNames}</td>
+        `;
 
         tr.style.cursor = "pointer";
         tr.onclick = () => openAllergyEditor(r);
 
-        tbody.appendChild(tr)
-    })
+        tbody.appendChild(tr);
+    });
 }
 
 function openAllergyEditor(resident) {
-    selectResident = resident;
-    selectAllergies = [...resident.allergies];
+    selectedResident = resident;
+    selectedAllergies = [...resident.allergies];
 
     document.getElementById("allergySection").style.display = "block";
     document.getElementById("residentNameHeader").textContent =
-        "Beboer: " +resident.name;
+        "Beboer: " + resident.name;
 
     renderTags();
 }
 
 async function loadAllergies() {
-    const res = await fetch("/api/allergies");
+    const res = await fetch(`${API}/api/allergies`);
     allAllergies = await res.json();
 }
 
@@ -54,10 +72,10 @@ function renderTags() {
     const tagList = document.getElementById("tagList");
     tagList.innerHTML = "";
 
-    selectAllergies.forEach(a => {
-       const tag = document.createElement("div");
-       tag.className = "tag";
-       tag.innerHTML= `
+    selectedAllergies.forEach(a => {
+        const tag = document.createElement("div");
+        tag.className = "tag";
+        tag.innerHTML = `
             ${a.name}
             <button onclick="removeTag(${a.id})">❌</button>
         `;
@@ -65,8 +83,8 @@ function renderTags() {
     });
 }
 
-function renderTag(id) {
-    selectAllergies = selectAllergies.filter(a => a.id !== id);
+function removeTag(id) {
+    selectedAllergies = selectedAllergies.filter(a => a.id !== id);
     renderTags();
 }
 
@@ -76,7 +94,7 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
 
     const filtered = allAllergies.filter(a =>
         a.name.toLowerCase().includes(search) &&
-        !selectAllergies.some(s => s.id === a.id)
+        !selectedAllergies.some(s => s.id === a.id)
     );
 
     dropdown.innerHTML = "";
@@ -87,7 +105,7 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
         item.className = "dropdown-item";
         item.textContent = a.name;
         item.onclick = () => {
-            selectAllergies.push(a);
+            selectedAllergies.push(a);
             renderTags();
             dropdown.style.display = "none";
             document.getElementById("allergySearch").value = "";
@@ -97,22 +115,19 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
 });
 
 document.getElementById("saveBtn").onclick = async () => {
-    if (!selectResident) return;
+    if (!selectedResident) return;
 
-    const updateResident = {
-        ...selectResident,
-        allergies: selectAllergies
+    const updatedResident = {
+        ...selectedResident,
+        allergies: selectedAllergies
     };
 
-    await fetch (`/api/residents/update/${selectedResident.id})`, {
-       method: "PUT",
-       headers: {"Content-type": "application/json"},
-       body: JSON.stringify(updateResident)
+    await fetch(`${API}/api/residents/update/${selectedResident.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedResident)
     });
 
-    alert("Allergier gmet");
+    alert("Allergier gemt!");
     loadResidents();
 };
-
-loadResidents();
-loadAllergies();
