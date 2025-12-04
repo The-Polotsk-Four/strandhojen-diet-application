@@ -3,6 +3,7 @@ package dk.polotsk.backend.Catalog.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -28,14 +29,14 @@ public class Resident {
     private double bmi;
 
     @Enumerated(EnumType.STRING)
-    private FoodConsisatency foodConsistency;
+    private FoodConsistency foodconsistency;
 
     @OneToMany
-    private List<Preference> preference;
+    private List<Preference> preference= new ArrayList<>();
     @OneToMany
-    private List<Diet> diet;
+    private List<Diet> diet = new ArrayList<>();
     @OneToMany
-    private List<Allergies> allergy;
+    private List<Allergies> allergy = new ArrayList<>();
     private int floor;
     private int roomNumber;
     private boolean status;
@@ -53,12 +54,12 @@ public class Resident {
         this.id = id;
     }
 
-    public FoodConsisatency getFoodConsistency() {
-        return foodConsistency;
+    public FoodConsistency getFoodConsistency() {
+        return foodconsistency;
     }
 
-    public void setFoodConsistency(FoodConsisatency foodConsistency) {
-        this.foodConsistency = foodConsistency;
+    public void setFoodConsistency(FoodConsistency foodConsistency) {
+        this.foodconsistency = foodConsistency;
     }
 
     public LocalDate getAge() {

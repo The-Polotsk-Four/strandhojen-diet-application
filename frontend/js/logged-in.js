@@ -1,4 +1,5 @@
-window.addEventListener("DOMContentLoaded",initApp);
+window.addEventListener("DOMContentLoaded", initApp);
+
 
 const API_BASE = 'http://localhost:8080';
 
@@ -8,8 +9,7 @@ async function initApp() {
     if (!user) {
         window.location.href = 'login.html';
     } else {
-        console.log('Logged in as:', user.username);
-        document.getElementById('username-display').textContent = user.username;
+        console.log('Logged in as:', user.login);
     }
 }
 

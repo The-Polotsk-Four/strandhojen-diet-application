@@ -27,8 +27,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**", "/api/**", "/login", "/actuator/**")
+                        .ignoringRequestMatchers("/h2-console/**", "/api/**", "/login", "/actuator/**", "/logout")
                 )
+//                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.sameOrigin())
                 )
@@ -37,13 +38,16 @@ public class SecurityConfig {
                 .securityContext(sc -> sc.securityContextRepository(securityContextRepository()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/login", "/api/users/create").permitAll()
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/api/login").permitAll()
+                        .requestMatchers("/api/users/create").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form.disable()
-                );
+//                .formLogin(form -> form.disable()
+//                );
+                .formLogin(form -> form.permitAll());
 //                .httpBasic(basic -> basic.);
 
         return http.build();
