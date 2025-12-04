@@ -1,25 +1,29 @@
-window.addEventListener("DOMContentLoaded", initApp);
+const BASE_URL = "http://localhost:8080";
 
-
-const API = "http://localhost:8080";
-
-function initApp() {
-    loadResidents();
-    loadAllergies();
-}
 let residents = [];
 let allAllergies = [];
 let selectedResident = null;
 let selectedAllergies = [];
 
-
+window.addEventListener("DOMContentLoaded", () => {
+    loadResidents();
+    loadAllergies();
+});
 
 
 async function loadResidents() {
-    const res = await fetch(`${API}/api/residents`);
-    residents = await res.json();
-    renderResidents(residents);
+    try {
+        const res = await fetch(`${BASE_URL}/api/residents`);
+        if (!res.ok) throw new Error("Failed to fetch residents");
+
+        residents = await res.json();
+        renderResidents(residents);
+
+    } catch (e) {
+        console.error("Residents fetch error:", e);
+    }
 }
+
 
 function renderResidents(list) {
     const tbody = document.getElementById("userTableBody");
@@ -27,18 +31,18 @@ function renderResidents(list) {
 
     list.forEach(r => {
 
-        const allergyNames = r.allergies && r.allergies.length > 0
-            ? r.allergies.map(a => a.name).join(", ")
-            : "Ingen";
+        const allergyNames = r.allergies
+            ?.map(a => a.name)
+            ?.join(", ") || "Ingen";
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${r.id}</td>
             <td>${r.name}</td>
-            <td>${r.age}</td>
-            <td>${r.weight}</td>
-            <td>${r.height}</td>
-            <td>${r.bmi}</td>
+            <td>${r.age ?? ""}</td>
+            <td>${r.weight ?? ""}</td>
+            <td>${r.height ?? ""}</td>
+            <td>${r.bmi ?? ""}</td>
             <td>${r.floor}</td>
             <td>${r.roomNumber}</td>
             <td>${r.status ? "Aktiv" : "Inaktiv"}</td>
@@ -52,9 +56,10 @@ function renderResidents(list) {
     });
 }
 
+
 function openAllergyEditor(resident) {
     selectedResident = resident;
-    selectedAllergies = [...resident.allergies];
+    selectedAllergies = [...(resident.allergies || [])];
 
     document.getElementById("allergySection").style.display = "block";
     document.getElementById("residentNameHeader").textContent =
@@ -63,10 +68,19 @@ function openAllergyEditor(resident) {
     renderTags();
 }
 
+
 async function loadAllergies() {
-    const res = await fetch(`${API}/api/allergies`);
-    allAllergies = await res.json();
+    try {
+        const res = await fetch(`${BASE_URL}/api/allergies`);
+        if (!res.ok) throw new Error("Failed to fetch allergies");
+
+        allAllergies = await res.json();
+
+    } catch (e) {
+        console.error("Allergies fetch error:", e);
+    }
 }
+
 
 function renderTags() {
     const tagList = document.getElementById("tagList");
@@ -87,6 +101,7 @@ function removeTag(id) {
     selectedAllergies = selectedAllergies.filter(a => a.id !== id);
     renderTags();
 }
+
 
 document.getElementById("allergySearch").addEventListener("input", (e) => {
     const search = e.target.value.toLowerCase();
@@ -114,6 +129,7 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
     });
 });
 
+
 document.getElementById("saveBtn").onclick = async () => {
     if (!selectedResident) return;
 
@@ -122,7 +138,7 @@ document.getElementById("saveBtn").onclick = async () => {
         allergies: selectedAllergies
     };
 
-    await fetch(`${API}/api/residents/update/${selectedResident.id}`, {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedResident)
