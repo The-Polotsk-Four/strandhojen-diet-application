@@ -72,11 +72,9 @@ public class ResidentInitData implements CommandLineRunner {
         resident01.setWeight(69.00);
         resident01.setHeight(169.00);
         resident01.calculateBmi();
-//        resident01.setFoodConsistency(FoodConsistency.SOLID);
 //        resident01.addAllergy(nuts);
         resident01.setFloor(1);
         resident01.setRoomNumber(101);
-//        resident01.setStatus(true);
         residentRepository.save(resident01);
 
         Resident resident02 = new Resident();
@@ -85,12 +83,9 @@ public class ResidentInitData implements CommandLineRunner {
         resident02.setWeight(55.00);
         resident02.setHeight(157.00);
         resident02.calculateBmi();
-//        resident02.setFoodConsistency(FoodConsistency.SOLID);
-//        resident02.addAllergy(nuts);
 //        resident02.addDiet(vegetarian);
         resident02.setFloor(2);
         resident02.setRoomNumber(201);
-//        resident02.setStatus(true);
         residentRepository.save(resident02);
 
         Resident resident03 = new Resident();
@@ -99,12 +94,9 @@ public class ResidentInitData implements CommandLineRunner {
         resident03.setWeight(82.00);
         resident03.setHeight(182.00);
         resident03.calculateBmi();
-//        resident02.setFoodConsistency(FoodConsistency.SOLID);
-//        resident02.addAllergy(nuts);
 //        resident02.addDiet(vegetarian);
         resident03.setFloor(3);
         resident03.setRoomNumber(301);
-//        resident02.setStatus(true);
         residentRepository.save(resident03);
 
         Resident resident04 = new Resident();
@@ -113,13 +105,9 @@ public class ResidentInitData implements CommandLineRunner {
         resident04.setWeight(76.00);
         resident04.setHeight(179.00);
         resident04.calculateBmi();
-//        resident02.setFoodConsistency(FoodConsistency.SOLID);
-//        resident02.addAllergy(nuts);
-//        resident02.addDiet(vegetarian);
 //        resident04.addPreference(tomato);
         resident04.setFloor(2);
         resident04.setRoomNumber(202);
-//        resident02.setStatus(true);
         residentRepository.save(resident04);
 
         Resident resident05 = new Resident();
@@ -128,15 +116,73 @@ public class ResidentInitData implements CommandLineRunner {
         resident04.setWeight(80.00);
         resident04.setHeight(178.00);
         resident04.calculateBmi();
-//        resident02.setFoodConsistency(FoodConsistency.SOLID);
 //        resident02.addAllergy(gluten);
 //        resident02.addAllergy(lactose);
 //        resident02.addDiet(vegetarian);
 //        resident04.addPreference(banana);
         resident04.setFloor(2);
-        resident04.setRoomNumber(202);
-//        resident02.setStatus(true);
+        resident04.setRoomNumber(203);
         residentRepository.save(resident05);
+
+        Resident resident06 = new Resident();
+        resident06.setName("Luna");
+        resident06.setAge(LocalDate.parse("1935-06-08"));
+        resident06.setWeight(99.00);
+        resident06.setHeight(169.00);
+        resident06.calculateBmi();
+        resident06.setFloor(1);
+        resident06.setRoomNumber(102);
+        residentRepository.save(resident06);
+
+        Resident resident07 = new Resident();
+        resident07.setName("Lily");
+        resident07.setAge(LocalDate.parse("1947-02-02"));
+        resident07.setWeight(42.00);
+        resident07.setHeight(150.00);
+        resident07.calculateBmi();
+        resident07.setFloor(3);
+        resident07.setRoomNumber(302);
+        residentRepository.save(resident07);
+
+        Resident resident08 = new Resident();
+        resident08.setName("Louie");
+        resident08.setAge(LocalDate.parse("1951-05-21"));
+        resident08.setWeight(55.00);
+        resident08.setHeight(155.00);
+        resident08.calculateBmi();
+        resident08.setFloor(1);
+        resident08.setRoomNumber(104);
+        residentRepository.save(resident08);
+
+        Resident resident09 = new Resident();
+        resident09.setName("Liam");
+        resident09.setAge(LocalDate.parse("1932-08-30"));
+        resident09.setWeight(78.00);
+        resident09.setHeight(178.00);
+        resident09.calculateBmi();
+        resident09.setFloor(1);
+        resident09.setRoomNumber(105);
+        residentRepository.save(resident09);
+
+        Resident resident10 = new Resident();
+        resident10.setName("Lauge");
+        resident10.setAge(LocalDate.parse("1928-11-01"));
+        resident10.setWeight(99.00);
+        resident10.setHeight(190.00);
+        resident10.calculateBmi();
+        resident10.setFloor(2);
+        resident10.setRoomNumber(203);
+        residentRepository.save(resident10);
+
+        Resident resident11 = new Resident();
+        resident11.setName("Lærke");
+        resident11.setAge(LocalDate.parse("1933-03-09"));
+        resident11.setWeight(76.00);
+        resident11.setHeight(188.00);
+        resident11.calculateBmi();
+        resident11.setFloor(3);
+        resident11.setRoomNumber(303);
+        residentRepository.save(resident09);
 
     }
 }
