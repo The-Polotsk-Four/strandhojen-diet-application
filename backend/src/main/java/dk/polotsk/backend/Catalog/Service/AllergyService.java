@@ -40,4 +40,12 @@ public class AllergyService implements AllergyServiceInterface {
                 .map(a -> new AllergiesDto(a.getId(), a.getName()))
                 .collect(Collectors.toList());
     }
+
+
+    public void deleteAllergy(Long id) {
+        if (!allergyRepository.existsById(id)) {
+            throw new RuntimeException("Allergy not found " + id);
+        }
+        allergyRepository.deleteById(id);
+    }
 }

@@ -31,4 +31,10 @@ public class AllergyController {
     public ResponseEntity<AllergiesDto> create(@RequestBody AllergiesDto dto) {
         return ResponseEntity.ok(allergyService.createAllergy(dto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> ddelete(@PathVariable Long id) {
+        allergyService.deleteAllergy(id);
+        return ResponseEntity.noContent().build();
+    }
 }
