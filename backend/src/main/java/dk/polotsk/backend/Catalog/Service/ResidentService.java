@@ -2,10 +2,12 @@ package dk.polotsk.backend.Catalog.Service;
 
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
+import dk.polotsk.backend.Catalog.model.Allergies;
 import dk.polotsk.backend.Catalog.model.Resident;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,6 +49,12 @@ public class ResidentService {
         return Mapper.toDto(residentRepository.save(existing));
     }
 
+    public void addAllergy(Long id, Allergies allergies) {
+        Resident resident = residentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id: " + id));
+
+        resident.addAllergy(allergies);
+    }
 
     public ResidentDto getResident(Long id) {
         Resident resident = residentRepository.findById(id)

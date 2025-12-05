@@ -42,10 +42,11 @@ public class AllergyService implements AllergyServiceInterface {
     }
 
 
-    public void deleteAllergy(Long id) {
+    public AllergiesDto deleteAllergy(Long id) {
         if (!allergyRepository.existsById(id)) {
             throw new RuntimeException("Allergy not found " + id);
         }
         allergyRepository.deleteById(id);
+        return null;
     }
 }

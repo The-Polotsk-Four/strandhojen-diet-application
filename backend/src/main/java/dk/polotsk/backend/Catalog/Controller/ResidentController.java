@@ -2,6 +2,8 @@ package dk.polotsk.backend.Catalog.Controller;
 
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
+import dk.polotsk.backend.Catalog.model.Allergies;
+import dk.polotsk.backend.Catalog.model.Resident;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +25,11 @@ public ResidentController(ResidentService residentService) {
 }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResidentDto> update(
+    public void update(
             @PathVariable Long id,
-            @RequestBody ResidentDto residentDto) {
-    return ResponseEntity.ok(residentService.updateResident(id, residentDto));
+            @PathVariable Allergies allergies
+   /*         @RequestBody ResidentDto residentDto*/) {
+        residentService.addAllergy(id, allergies);
     }
 
 @GetMapping("/{id}")
