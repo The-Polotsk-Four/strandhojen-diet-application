@@ -95,8 +95,8 @@ public class ResidentInitData implements CommandLineRunner {
         resident03.setHeight(182.00);
         resident03.calculateBmi();
 //        resident02.addDiet(vegetarian);
-        resident03.setFloor(3);
-        resident03.setRoomNumber(301);
+        resident03.setFloor(0);
+        resident03.setRoomNumber(001);
         residentRepository.save(resident03);
 
         Resident resident04 = new Resident();
