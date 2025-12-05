@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -38,22 +39,20 @@ class LoginIntegrationTest {
 
     @Test
     void loginShouldReturn200WhenCredentialsAreCorrect() throws Exception {
-        mockMvc.perform(post("/api/login")
-                        .contentType("application/json")
-                        .content("""
-                        {"username":"johnny","password":"mypassword"}
-                        """))
-                .andExpect(status().isOk());
+        mockMvc.perform(post("/login")
+                        .param("username", "johnny")
+                        .param("password", "mypassword"))
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
     void loginShouldReturn401OnInvalidPassword() throws Exception {
-        mockMvc.perform(post("/api/login")
-                        .contentType("application/json")
-                        .content("""
-                        {"username":"johnny","password":"wrong"}
-                        """))
-                .andExpect(status().isUnauthorized());
+        mockMvc.perform(post("/login")
+                        .param("username", "johnny")
+                        .param("password", "wrong"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login?error"));
     }
+
 }
 
