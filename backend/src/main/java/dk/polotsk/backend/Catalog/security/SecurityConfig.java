@@ -44,7 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/residents/**").permitAll()
                         .requestMatchers("/api/users/create").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
-                        /*.requestMatchers("/api/**").authenticated()*/
+                        .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
 //                .formLogin(form -> form.disable()
