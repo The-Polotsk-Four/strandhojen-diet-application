@@ -24,12 +24,12 @@ public ResidentController(ResidentService residentService) {
     return ResponseEntity.ok(residentService.createResident(residentDto));
 }
 
-    @PutMapping("/update/{id}")
-    public void update(
-            @PathVariable Long id,
-            @PathVariable Allergies allergies
-   /*         @RequestBody ResidentDto residentDto*/) {
-        residentService.addAllergy(id, allergies);
+    @PutMapping("/update/{residentId}/addAllergy/{allergyId}")
+    public ResidentDto addAllergy(
+            @PathVariable Long residentId,
+            @PathVariable Long allergyId
+    ) {
+    return residentService.addAllergy(residentId, allergyId);
     }
 
 @GetMapping("/{id}")

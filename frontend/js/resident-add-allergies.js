@@ -82,6 +82,7 @@ async function loadAllergies() {
 }
 
 
+
 function renderTags() {
     const tagList = document.getElementById("tagList");
     tagList.innerHTML = "";
@@ -91,7 +92,7 @@ function renderTags() {
         tag.className = "tag";
         tag.innerHTML = `
             ${a.name}
-            <button onclick="removeTag(${a.id})">❌</button>
+            <button onclick="removeTag(${a.id})"></button>
         `;
         tagList.appendChild(tag);
     });
