@@ -49,4 +49,12 @@ public class AllergyService implements AllergyServiceInterface {
         allergyRepository.deleteById(id);
         return null;
     }
+
+    public AllergiesDto getAllergyByName(String name){
+        Allergies allergy = allergyRepository.getByName(name);
+
+        return new AllergiesDto(allergy.getId(), allergy.getName());
+
+
+    }
 }

@@ -31,19 +31,23 @@ public class ResidentController {
     return ResponseEntity.ok(residentService.createResident(residentDto));
 }
 
-    @PutMapping("/update/{residentId}/addAllergy/{allergyName}")
+@PutMapping("/update/{residentId}/addAllergy")
     public ResidentDto addAllergy(
             @PathVariable Long residentId,
             @RequestBody AllergiesDto allergy
     ) {
 
+    AllergiesDto dto;
+
+    System.out.println(residentId);
     if (!allergyRepository.existsByName(allergy.name())){
-        allergyService.createAllergy(allergy);
+        dto = allergyService.createAllergy(allergy);
     } else {
-        allergyService.getAllergy()
+        dto = allergyService.getAllergyByName(allergy.name());
+        System.out.println("Allergi eksisterer allerede");
     }
 
-    return residentService.addAllergy(residentId, allergy.id());
+    return residentService.addAllergy(residentId, dto.id());
     }
 
 @GetMapping("/{id}")

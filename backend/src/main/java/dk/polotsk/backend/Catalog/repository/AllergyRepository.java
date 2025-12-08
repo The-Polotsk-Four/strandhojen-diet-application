@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AllergyRepository extends JpaRepository<Allergies, Long> {
 
     boolean existsByName(String name);
+    Allergies getByName(String name);
 
 }
