@@ -1,9 +1,12 @@
 package dk.polotsk.backend.Catalog.Controller;
 
+import dk.polotsk.backend.Catalog.Service.AllergyService;
 import dk.polotsk.backend.Catalog.Service.ResidentService;
+import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.model.Allergies;
 import dk.polotsk.backend.Catalog.model.Resident;
+import dk.polotsk.backend.Catalog.repository.AllergyRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,22 +17,33 @@ import java.util.List;
 public class ResidentController {
 
     private final ResidentService residentService;
+    private final AllergyRepository allergyRepository;
+    private final AllergyService allergyService;
 
-public ResidentController(ResidentService residentService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService) {
     this.residentService = residentService;
-}
+        this.allergyRepository = allergyRepository;
+        this.allergyService = allergyService;
+    }
 
 @PostMapping("/create")
     public ResponseEntity<ResidentDto> create(@RequestBody ResidentDto residentDto){
     return ResponseEntity.ok(residentService.createResident(residentDto));
 }
 
-    @PutMapping("/update/{residentId}/addAllergy/{allergyId}")
+    @PutMapping("/update/{residentId}/addAllergy/{allergyName}")
     public ResidentDto addAllergy(
             @PathVariable Long residentId,
-            @PathVariable Long allergyId
+            @RequestBody AllergiesDto allergy
     ) {
-    return residentService.addAllergy(residentId, allergyId);
+
+    if (!allergyRepository.existsByName(allergy.name())){
+        allergyService.createAllergy(allergy);
+    } else {
+        allergyService.getAllergy()
+    }
+
+    return residentService.addAllergy(residentId, allergy.id());
     }
 
 @GetMapping("/{id}")

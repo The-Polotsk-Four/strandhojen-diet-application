@@ -1,5 +1,6 @@
 package dk.polotsk.backend.Catalog.Service;
 
+import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.Allergies;
@@ -58,6 +59,7 @@ public class ResidentService {
 
         Allergies allergy = allergyRepository.findById(allergyId)
                         .orElseThrow(() -> new RuntimeException("Allergy not found with id: " + allergyId));
+
 
         if (!resident.getAllergy().contains(allergy)) {
             resident.addAllergy(allergy);
