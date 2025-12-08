@@ -12,6 +12,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     ResponseEntity<String> handleException(final RuntimeException e) {
         System.out.println("Exception caught successfully");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("What you're looking for wasn't found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }
