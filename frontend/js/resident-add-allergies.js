@@ -134,15 +134,19 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
 document.getElementById("saveBtn").onclick = async () => {
     if (!selectedResident) return;
 
+    const allergy = {
+        name: document.querySelector("#allergySearch").value
+    }
+
     const updatedResident = {
         ...selectedResident,
         allergies: selectedAllergies
     };
 
-    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}`, {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedResident)
+        body: JSON.stringify(allergy)
     });
 
     alert("Allergier gemt!");

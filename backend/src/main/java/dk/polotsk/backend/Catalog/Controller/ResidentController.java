@@ -40,6 +40,7 @@ public class ResidentController {
     AllergiesDto dto;
 
     System.out.println(residentId);
+    System.out.println(allergy);
     if (!allergyRepository.existsByName(allergy.name())){
         dto = allergyService.createAllergy(allergy);
     } else {
