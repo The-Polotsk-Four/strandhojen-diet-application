@@ -1,11 +1,10 @@
-package dk.polotsk.backend.Catalog.Controller;
+package dk.polotsk.backend.Catalog.controller;
 
 
 import dk.polotsk.backend.Catalog.Service.UserService;
 import dk.polotsk.backend.Catalog.dto.ErrorDto;
 import dk.polotsk.backend.Catalog.dto.UserCreateDto;
 import dk.polotsk.backend.Catalog.dto.UserDto;
-import dk.polotsk.backend.Catalog.model.User;
 import dk.polotsk.backend.Catalog.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

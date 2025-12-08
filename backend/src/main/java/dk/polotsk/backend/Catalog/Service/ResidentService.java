@@ -1,6 +1,7 @@
 package dk.polotsk.backend.Catalog.Service;
 
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
+import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.Resident;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
@@ -50,7 +51,7 @@ public class ResidentService {
 
     public ResidentDto getResident(Long id) {
         Resident resident = residentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resident not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Resident not found with id: " + id));
 
         return Mapper.toDto(resident);
     }
@@ -64,7 +65,7 @@ public class ResidentService {
 
     public void deleteResident(Long id) {
         if (!residentRepository.existsById(id)) {
-            throw new RuntimeException("Resident not found with id: " + id);
+            throw new NotFoundException("Resident not found with id: " + id);
         }
         residentRepository.deleteById(id);
     }
