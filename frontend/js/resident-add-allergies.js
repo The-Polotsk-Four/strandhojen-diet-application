@@ -75,13 +75,25 @@ async function loadAllergies() {
         if (!res.ok) throw new Error("Failed to fetch allergies");
 
         allAllergies = await res.json();
+        console.log(allAllergies)
 
     } catch (e) {
         console.error("Allergies fetch error:", e);
     }
 }
 
+async function removeAllergy(id){
+    await fetch(`${BASE_URL}/api/allergies${id}`, {
+       method: "DELETE"
+    });
 
+    selectedAllergies = selectedAllergies.filter(a => a.id !== id);
+
+    renderTags();
+
+    await loadResidents();
+
+}
 
 function renderTags() {
     const tagList = document.getElementById("tagList");
@@ -92,9 +104,16 @@ function renderTags() {
         tag.className = "tag";
         tag.innerHTML = `
             ${a.name}
-            <button onclick="removeTag(${a.id})"></button>
+            <button id= "deletebtn"onclick="removeTag(${a.id})">X</button>
         `;
+        tag.addEventListener("click", async () => {
+            await fetch(`${BASE_URL}/api/allergies/${a.id}`, {
+                method: "DELETE"
+            });
+        })
+
         tagList.appendChild(tag);
+
     });
 }
 
@@ -138,11 +157,6 @@ document.getElementById("saveBtn").onclick = async () => {
         name: document.querySelector("#allergySearch").value
     }
 
-    const updatedResident = {
-        ...selectedResident,
-        allergies: selectedAllergies
-    };
-
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -151,4 +165,5 @@ document.getElementById("saveBtn").onclick = async () => {
 
     alert("Allergier gemt!");
     loadResidents();
+    loadAllergies();
 };

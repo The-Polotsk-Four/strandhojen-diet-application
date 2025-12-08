@@ -9,8 +9,18 @@
 
 <h2>Beboer</h2>
 
-<input type="text" id="searchInput">
-<button id="searchBtn">Søg</button>
+<h2>Rediger allergier</h2>
+<div id="allergySection" style="display:none;">
+  <h3 id="residentNameHeader"></h3>
+
+  <div id="tagList"></div>
+
+  <input type="text" id="allergySearch">
+
+  <div id="dropdown"></div>
+
+  <button id="saveBtn">Gem allergier</button>
+</div>
 
 <table id="userTable" border="1" cellspacing="0" cellpadding="5">
   <thead>
@@ -33,18 +43,6 @@
 
 <hr>
 
-<h2>Rediger allergier</h2>
-<div id="allergySection" style="display:none;">
-  <h3 id="residentNameHeader"></h3>
-
-  <div id="tagList"></div>
-
-  <input type="text" id="allergySearch">
-
-  <div id="dropdown"></div>
-
-  <button id="saveBtn">Gem allergier</button>
-</div>
 
 <script src="../js/resident-add-allergies.js"></script>
 </body>

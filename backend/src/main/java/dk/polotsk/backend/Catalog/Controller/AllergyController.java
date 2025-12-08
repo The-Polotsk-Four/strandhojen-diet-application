@@ -33,7 +33,7 @@ public class AllergyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> ddelete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         allergyService.deleteAllergy(id);
         return ResponseEntity.noContent().build();
     }
