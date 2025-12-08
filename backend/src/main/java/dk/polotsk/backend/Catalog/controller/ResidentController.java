@@ -1,7 +1,8 @@
-package dk.polotsk.backend.Catalog.Controller;
+package dk.polotsk.backend.Catalog.controller;
 
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
+import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,20 @@ public ResidentController(ResidentService residentService) {
     public ResponseEntity<ResidentDto> update(
             @PathVariable Long id,
             @RequestBody ResidentDto residentDto) {
-    return ResponseEntity.ok(residentService.updateResident(id, residentDto));
+    try {
+        return ResponseEntity.ok(residentService.updateResident(id, residentDto));
+    } catch (RuntimeException e) {
+        throw new NotFoundException(e.getMessage());
+    }
     }
 
 @GetMapping("/{id}")
     public ResponseEntity<ResidentDto> getById(@PathVariable Long id){
-    return  ResponseEntity.ok(residentService.getResident(id));
+    try {
+        return ResponseEntity.ok(residentService.getResident(id));
+    } catch (RuntimeException e) {
+        throw new NotFoundException(e.getMessage());
+    }
 }
 
     @GetMapping
@@ -42,6 +51,10 @@ public ResidentController(ResidentService residentService) {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         residentService.deleteResident(id);
-        return ResponseEntity.noContent().build();
+        try {
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            throw new NotFoundException(e.getMessage());
+        }
     }
 }
