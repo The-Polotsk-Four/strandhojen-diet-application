@@ -95,7 +95,9 @@ public class Resident {
     }
 
     public double calculateBmi() {
-        this.bmi = this.weight/(Math.pow(this.weight, 2));
+        // calculates the bmi using the equation weight/height^2
+        // height in our system is in cm, equation needs m, so it's divided by 100
+        this.bmi = this.weight/(Math.pow((this.height/100), 2));
         return this.bmi;
     }
 
