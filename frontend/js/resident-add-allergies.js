@@ -104,22 +104,23 @@ function renderTags() {
         tag.className = "tag";
         tag.innerHTML = `
             ${a.name}
-            <button id= "deletebtn"onclick="removeTag(${a.id})">X</button>
+            <button id= "deletebtn" onclick="removeTag(${a.id})">X</button>
         `;
-        tag.addEventListener("click", async () => {
-            await fetch(`${BASE_URL}/api/allergies/${a.id}`, {
-                method: "DELETE"
-            });
-        })
-
         tagList.appendChild(tag);
-
     });
 }
 
-function removeTag(id) {
+async function removeTag(id) {
+    if (!selectedResident) return;
+
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeAllergy/${id}`, {
+        method: "DELETE"
+    });
+
     selectedAllergies = selectedAllergies.filter(a => a.id !== id);
+
     renderTags();
+    loadResidents();
 }
 
 

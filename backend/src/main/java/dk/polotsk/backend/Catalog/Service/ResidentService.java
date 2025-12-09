@@ -69,6 +69,22 @@ public class ResidentService {
         return Mapper.toDto(resident);
     }
 
+    public ResidentDto removeAllergy(Long residentId, Long allergyId) {
+
+        Resident resident = residentRepository.findById(residentId)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id " + residentId));
+
+        Allergies allergy = allergyRepository.findById(allergyId)
+                .orElseThrow(() -> new RuntimeException("Allergy not found with id " + allergyId));
+
+       if  (resident.getAllergy().contains(allergy)){
+           resident.removeAllergy(allergy);
+           residentRepository.save(resident);
+       }
+
+        return Mapper.toDto(resident);
+    }
+
     public ResidentDto getResident(Long id) {
         Resident resident = residentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resident not found with id: " + id));

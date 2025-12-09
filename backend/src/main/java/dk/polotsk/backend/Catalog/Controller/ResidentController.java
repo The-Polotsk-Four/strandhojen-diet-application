@@ -4,8 +4,6 @@ import dk.polotsk.backend.Catalog.Service.AllergyService;
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
-import dk.polotsk.backend.Catalog.model.Allergies;
-import dk.polotsk.backend.Catalog.model.Resident;
 import dk.polotsk.backend.Catalog.repository.AllergyRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,4 +64,14 @@ public class ResidentController {
         residentService.deleteResident(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/update/{residentId}/removeAllergy/{allergyId}")
+    public ResidentDto removeAllergy(
+            @PathVariable Long residentId,
+            @PathVariable Long allergyId
+    ) {
+
+        return residentService.removeAllergy(residentId, allergyId);
+    }
+
 }
