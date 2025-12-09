@@ -1,21 +1,26 @@
 package dk.polotsk.backend.Catalog.Service;
 
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
+import dk.polotsk.backend.Catalog.dto.UserDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.Resident;
+import dk.polotsk.backend.Catalog.model.User;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ResidentService {
 
     private final ResidentRepository residentRepository;
+    private final Mapper mapper;
 
-    public ResidentService(ResidentRepository residentRepository) {
+    public ResidentService(ResidentRepository residentRepository, Mapper mapper) {
         this.residentRepository = residentRepository;
+        this.mapper = mapper;
     }
 
     public ResidentDto createResident(ResidentDto residentDto){
@@ -69,4 +74,30 @@ public class ResidentService {
         }
         residentRepository.deleteById(id);
     }
+
+    public List<ResidentDto> findResidentByName(String name){
+        List<Resident> residents = residentRepository.findResidentByName(name);
+        if (residents.isEmpty()){
+            throw new RuntimeException("Can't find resident with name: "+name);
+        }
+
+        List<ResidentDto> residentDtos = new ArrayList<>();
+        for (Resident resident : residents){
+            residentDtos.add(Mapper.toDto(resident));
+        }
+        return residentDtos;
+    }
+
+//    public List<UserDto> getByUserLogin(String login){
+//        List<User> users = userRepository.findUserByLogin(login);
+//        if (users.isEmpty()){
+//            throw new RuntimeException("Can't find user with login "+login);
+//        }
+//        List<UserDto> userDtos = new ArrayList<>();
+//        for (User user : users){
+//            userDtos.add(Mapper.toDto(user));
+//        }
+//        return userDtos;
+
+
 }

@@ -5,7 +5,7 @@ async function findBeboer(event) {
     const id = Number(document.getElementById("searchId").value);
     if (!id) return alert("Indtast et ID");
 
-    const res = await fetch(`${API}/get/${id}`);
+    const res = await fetch(`${API}/${id}`);
     if (!res.ok) return alert("Beboer ikke fundet");
 
     const resident = await res.json();
