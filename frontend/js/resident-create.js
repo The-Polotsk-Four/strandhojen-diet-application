@@ -45,7 +45,7 @@ async function opretBeboer(event) {
     };
 
     try {
-        const response = await fetch("/api/residents", {
+        const response = await fetch("/api/residents/create", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
