@@ -74,6 +74,13 @@ function renderResident(resident) {
     row.appendChild(renderCell(resident.roomNumber));
     row.appendChild(renderCell(resident.status));
 
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Beboer profil";
+    editBtn.addEventListener("click", () => {
+        window.location.href = `resident-page.html?id=${resident.id}`;
+    });
+    row.appendChild(editBtn);
+
     document.querySelector("#residentTable").appendChild(row);
 }
 
