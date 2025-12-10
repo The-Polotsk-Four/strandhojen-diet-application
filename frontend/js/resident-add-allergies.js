@@ -13,7 +13,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
 async function loadResidents() {
     try {
-        const res = await fetch(`${BASE_URL}/api/residents`);
+        const res = await fetch(`${BASE_URL}/api/residents`,{
+            credentials: "include"
+            }
+            );
         if (!res.ok) throw new Error("Failed to fetch residents");
 
         residents = await res.json();
@@ -31,10 +34,11 @@ function renderResidents(list) {
 
     list.forEach(r => {
 
-        const allergyNames = r.allergies
-            ?.map(a => a.name)
-            ?.join(", ") || "Ingen";
+        const allergyList = r.allergies && r.allergies.length
+            ? `<ul>${r.allergies.map(a => `<li>${a.name}</li>`).join("")}</ul>`
+            : "ingen"
 
+                
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${r.id}</td>
@@ -46,7 +50,7 @@ function renderResidents(list) {
             <td>${r.floor}</td>
             <td>${r.roomNumber}</td>
             <td>${r.status ? "Aktiv" : "Inaktiv"}</td>
-            <td>${allergyNames}</td>
+            <td>${allergyList}</td>
         `;
 
         tr.style.cursor = "pointer";
@@ -80,19 +84,6 @@ async function loadAllergies() {
     } catch (e) {
         console.error("Allergies fetch error:", e);
     }
-}
-
-async function removeAllergy(id){
-    await fetch(`${BASE_URL}/api/allergies${id}`, {
-       method: "DELETE"
-    });
-
-    selectedAllergies = selectedAllergies.filter(a => a.id !== id);
-
-    renderTags();
-
-    await loadResidents();
-
 }
 
 function renderTags() {
@@ -149,6 +140,15 @@ document.getElementById("allergySearch").addEventListener("input", (e) => {
         dropdown.appendChild(item);
     });
 });
+
+document.addEventListener("click", (e) => {
+    const searchInput = document.getElementById("allergySearch");
+    const dropdown = document.getElementById("dropdown");
+
+    if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+    }
+})
 
 
 document.getElementById("saveBtn").onclick = async () => {
