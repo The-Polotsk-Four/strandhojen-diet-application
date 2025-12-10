@@ -46,24 +46,7 @@ public class BackendApplication {
     //Email Sender
     @EventListener(ApplicationReadyEvent.class)
     public void sendEmail() {
-        SenderService.sendEmail("hejthenerd@gmail.com", "Test Email", "This is a test email");
+        SenderService.sendEmail("Test@gmail.com", "Test Email", "This is a test email");
     }
-
-    // COMMANDLINE RUNNER
-//    @Bean
-//    CommandLineRunner commandLineRunner(MessageRepository messageRepository) {
-//        return args -> {
-//            System.out.println("---------------");
-//            System.out.println("Initializing Database using CommandLineRunner");
-//
-//            if (messageRepository.count() > 0) {
-//                return;
-//            }
-//            Message msg1 = new Message("Hello, Docker!");
-//            Message msg2 = new Message("Hello, Spring Boot!");
-//            Message msg3 = new Message("Hello, MySQL!");
-//            messageRepository.saveAll(List.of(msg1, msg2, msg3));
-//        };
-//    }
 
 }
