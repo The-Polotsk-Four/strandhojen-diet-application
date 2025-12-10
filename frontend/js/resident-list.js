@@ -59,29 +59,33 @@ async function fetchResident() {
 }
 
 function renderResidents(residents) {
-    const tableBody = document.querySelector("#residentTable");
-    tableBody.textContent = "";
+    const tbody = document.getElementById("tbody-table");
+    tbody.textContent = ""; // ryd kun tbody
 
     residents.forEach(resident => renderResident(resident));
 }
 
 function renderResident(resident) {
+    const tbody = document.getElementById("tbody-table");
     const row = document.createElement("tr");
 
     row.appendChild(renderCell(resident.name));
     row.appendChild(renderCell(resident.age));
     row.appendChild(renderCell(resident.floor));
     row.appendChild(renderCell(resident.roomNumber));
-    row.appendChild(renderCell(resident.status));
+    row.appendChild(renderCell(resident.status ? "Aktiv" : "Inaktiv"));
 
     const editBtn = document.createElement("button");
     editBtn.textContent = "Beboer profil";
     editBtn.addEventListener("click", () => {
         window.location.href = `resident-page.html?id=${resident.id}`;
     });
-    row.appendChild(editBtn);
 
-    document.querySelector("#residentTable").appendChild(row);
+    const btnCell = document.createElement("td");
+    btnCell.appendChild(editBtn);
+    row.appendChild(btnCell);
+
+    tbody.appendChild(row);
 }
 
 function renderCell(content) {
@@ -89,3 +93,6 @@ function renderCell(content) {
     cell.textContent = content;
     return cell;
 }
+
+
+

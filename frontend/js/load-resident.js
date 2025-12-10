@@ -35,19 +35,19 @@ function renderResident(resident) {
 
 
     document.getElementById("name").innerHTML =
-        `<span class="label">Name:</span> ${resident.name}`;
+        `<span class="label">Navn:</span> ${resident.name}`;
 
     document.getElementById("age").innerHTML =
-        `<span class="label">Age:</span> ${resident.age}`;
+        `<span class="label">Alder:</span> ${resident.age}`;
 
     document.getElementById("bmi").innerHTML =
         `<span class="label">BMI:</span> ${resident.bmi.toFixed(2)}`;
 
     document.getElementById("height").innerHTML =
-        `<span class="label">Height:</span> ${resident.height} cm`;
+        `<span class="label">Højde:</span> ${resident.height} cm`;
 
     document.getElementById("weight").innerHTML =
-        `<span class="label">Weight:</span> ${resident.weight} kg`;
+        `<span class="label">Vægt:</span> ${resident.weight} kg`;
 
     let consistency;
     if (resident.FoodConsistency === "SOLID") {
@@ -61,26 +61,26 @@ function renderResident(resident) {
     }
 
     document.getElementById("food").innerHTML =
-        `<span class="label">Food Consistency:</span> ${consistency}`;
+        `<span class="label">Mad konsistens:</span> ${consistency}`;
 
 
     document.getElementById("room").innerHTML =
-        `<span class="label">Room Number:</span> ${resident.roomNumber}`;
+        `<span class="label">Værelses nummer:</span> ${resident.roomNumber}`;
 
     document.getElementById("floor").innerHTML =
-        `<span class="label">Floor:</span> ${resident.floor}`;
+        `<span class="label">Etage:</span> ${resident.floor}`;
 
     document.getElementById("status").innerHTML =
         `<span class="label">Status:</span> ${resident.status ? "Aktiv" : "Inaktiv"}`;
 
     document.getElementById("allergies").innerHTML =
-        `<span class="label">Allergies:</span> ${resident.allergies.length ? resident.allergies.join(", ") : "None"}`;
+        `<span class="label">Allergier:</span> ${resident.allergies.length ? resident.allergies.join(", ") : "Ingen allergier"}`;
 
     document.getElementById("diet").innerHTML =
-        `<span class="label">Diet:</span> ${resident.diet.length ? resident.diet.join(", ") : "None"}`;
+        `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.join(", ") : "Intet at tage højde for"}`;
 
     document.getElementById("preference").innerHTML =
-        `<span class="label">Preferences:</span> ${resident.preference.length ? resident.preference.join(", ") : "None"}`;
+        `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.join(", ") : "Ingen preferencer"}`;
 }
 
 
