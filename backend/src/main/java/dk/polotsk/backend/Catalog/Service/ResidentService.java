@@ -1,26 +1,23 @@
 package dk.polotsk.backend.Catalog.Service;
 
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
-import dk.polotsk.backend.Catalog.dto.UserDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.Resident;
-import dk.polotsk.backend.Catalog.model.User;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ResidentService {
 
     private final ResidentRepository residentRepository;
-    private final Mapper mapper;
+    private final AllergyRepository allergyRepository;
 
-    public ResidentService(ResidentRepository residentRepository, Mapper mapper) {
+    public ResidentService(ResidentRepository residentRepository, AllergyRepository allergyRepository) {
         this.residentRepository = residentRepository;
-        this.mapper = mapper;
+        this.allergyRepository = allergyRepository;
     }
 
     public ResidentDto createResident(ResidentDto residentDto){
@@ -53,6 +50,37 @@ public class ResidentService {
         return Mapper.toDto(residentRepository.save(existing));
     }
 
+    public ResidentDto addAllergy(Long residentId, Long allergyId) {
+        Resident resident = residentRepository.findById(residentId)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id: " + residentId));
+
+        Allergies allergy = allergyRepository.findById(allergyId)
+                        .orElseThrow(() -> new RuntimeException("Allergy not found with id: " + allergyId));
+
+
+        if (!resident.getAllergy().contains(allergy)) {
+            resident.addAllergy(allergy);
+            residentRepository.save(resident);
+        }
+
+        return Mapper.toDto(resident);
+    }
+
+    public ResidentDto removeAllergy(Long residentId, Long allergyId) {
+
+        Resident resident = residentRepository.findById(residentId)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id " + residentId));
+
+        Allergies allergy = allergyRepository.findById(allergyId)
+                .orElseThrow(() -> new RuntimeException("Allergy not found with id " + allergyId));
+
+       if  (resident.getAllergy().contains(allergy)){
+           resident.removeAllergy(allergy);
+           residentRepository.save(resident);
+       }
+
+        return Mapper.toDto(resident);
+    }
 
     public ResidentDto getResident(Long id) {
         Resident resident = residentRepository.findById(id)
