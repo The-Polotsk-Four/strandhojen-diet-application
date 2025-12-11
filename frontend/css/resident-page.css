@@ -3,28 +3,40 @@ body {
     margin: 0;
     background: #f7f7f7;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    justify-content: center; /* center entire layout */
+    padding-top: 40px;
 }
 
 #resident-container {
     background: white;
-    padding: 20px 25px;
-    border-radius: 8px;
-    max-width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    width: 650px;
+    max-width: 900px;
     border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    width: 90%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .row {
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #eee;
+    line-height: 1.6;
 }
 
 .label {
     font-weight: bold;
-    margin-right: 6px;
+    margin-right: 10px;
+    font-size: 1.05rem;
 }
+
+.btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #0078ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+

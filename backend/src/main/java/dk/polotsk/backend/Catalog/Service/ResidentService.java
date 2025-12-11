@@ -3,10 +3,13 @@ package dk.polotsk.backend.Catalog.Service;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
+import dk.polotsk.backend.Catalog.model.Allergies;
 import dk.polotsk.backend.Catalog.model.Resident;
+import dk.polotsk.backend.Catalog.repository.AllergyRepository;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,17 +118,4 @@ public class ResidentService {
         }
         return residentDtos;
     }
-
-//    public List<UserDto> getByUserLogin(String login){
-//        List<User> users = userRepository.findUserByLogin(login);
-//        if (users.isEmpty()){
-//            throw new RuntimeException("Can't find user with login "+login);
-//        }
-//        List<UserDto> userDtos = new ArrayList<>();
-//        for (User user : users){
-//            userDtos.add(Mapper.toDto(user));
-//        }
-//        return userDtos;
-
-
 }

@@ -1,4 +1,7 @@
+import { getCurrentUser } from './fetchUser.js';
+
 document.addEventListener("DOMContentLoaded", initApp);
+
 
 // gets the resident id from url. Used to fetch information for the correct resident
 const residentId = new URLSearchParams(window.location.search).get("id");
@@ -10,14 +13,16 @@ const getResidentUrl = `http://localhost:8080/api/residents/${residentId}`;
 async function initApp() {
     console.log("js loaded");
     residentNotSelected();
+    const user = await getCurrentUser();
+    console.log(user);
 
-    await loadResident()
+    await loadResident(user)
 
 
 }
 
 
-async function loadResident() {
+async function loadResident(user) {
 
     const resp = await fetch(getResidentUrl);
 
@@ -27,10 +32,10 @@ async function loadResident() {
 
     const data = await resp.json();
 
-    renderResident(data);
+    renderResident(data, user);
 }
 
-function renderResident(resident) {
+function renderResident(resident, user) {
     console.log(resident);
 
 
@@ -73,14 +78,32 @@ function renderResident(resident) {
     document.getElementById("status").innerHTML =
         `<span class="label">Status:</span> ${resident.status ? "Aktiv" : "Inaktiv"}`;
 
+    if (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN"){
     document.getElementById("allergies").innerHTML =
-        `<span class="label">Allergier:</span> ${resident.allergies.length ? resident.allergies.join(", ") : "Ingen allergier"}`;
+        `<span class="label">Allergier:</span>
+     ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}
+     <br>
+     <a href="resident-add-allergies.html" class="btn">Tilføj flere allergi</a>`;
+    } else {
+        document.getElementById("allergies").innerHTML =
+            `<span class="label">Allergier:</span>
+     ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}`
+    }
 
     document.getElementById("diet").innerHTML =
-        `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.join(", ") : "Intet at tage højde for"}`;
+        `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.map(diet => diet.name).join(", ") : "Intet at tage højde for"}`;
 
     document.getElementById("preference").innerHTML =
-        `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.join(", ") : "Ingen preferencer"}`;
+        `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.map(preference => preference.name).join(", ") : "Ingen preferencer"}`;
+
+    if (resident.comment !== null){
+        document.getElementById("comment").innerHTML =
+        `<span class="label">Kommentar:</span> ${resident.comment}`;
+    }
+
+
+
+
 }
 
 
