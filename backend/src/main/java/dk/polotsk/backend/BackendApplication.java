@@ -1,18 +1,24 @@
 package dk.polotsk.backend;
 
 //import dk.polotsk.backend.Catalog.model.Message;
+import dk.polotsk.backend.Catalog.Service.EmailSenderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.sql.DataSource;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
 
 import java.sql.SQLException;
 import java.util.List;
 
 @SpringBootApplication
 public class BackendApplication {
+    @Autowired
+    private EmailSenderService SenderService;
 
     public static void main(String[] args) {
         var context = SpringApplication.run(BackendApplication.class, args);
@@ -37,21 +43,10 @@ public class BackendApplication {
 
     }
 
-    // COMMANDLINE RUNNER
-//    @Bean
-//    CommandLineRunner commandLineRunner(MessageRepository messageRepository) {
-//        return args -> {
-//            System.out.println("---------------");
-//            System.out.println("Initializing Database using CommandLineRunner");
-//
-//            if (messageRepository.count() > 0) {
-//                return;
-//            }
-//            Message msg1 = new Message("Hello, Docker!");
-//            Message msg2 = new Message("Hello, Spring Boot!");
-//            Message msg3 = new Message("Hello, MySQL!");
-//            messageRepository.saveAll(List.of(msg1, msg2, msg3));
-//        };
-//    }
+    //Email Sender
+    @EventListener(ApplicationReadyEvent.class)
+    public void sendEmail() {
+        SenderService.sendEmail("Test@gmail.com", "Test Email", "This is a test email");
+    }
 
 }

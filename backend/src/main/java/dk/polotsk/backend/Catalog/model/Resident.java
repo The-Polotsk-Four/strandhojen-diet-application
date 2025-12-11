@@ -35,8 +35,14 @@ public class Resident {
     private List<Preference> preference = new ArrayList<>();
     @OneToMany
     private List<Diet> diet = new ArrayList<>();
-    @OneToMany
-    private List<Allergies> allergy = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "resident_allergy",
+            joinColumns = @JoinColumn(name = "resident_id"),
+            inverseJoinColumns = @JoinColumn(name = "allergy_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"resident_id", "allergy_id"})
+    )
+    private List<Allergies> allergies = new ArrayList<>();
     private int floor;
     private int roomNumber;
     private boolean status = true;
@@ -134,19 +140,19 @@ public class Resident {
     }
 
     public void addAllergy(Allergies allergies){
-        this.allergy.add(allergies);
+        this.allergies.add(allergies);
     }
 
     public void removeAllergy(Allergies allergies){
-        this.allergy.remove(allergies);
+        this.allergies.remove(allergies);
     }
 
     public List<Allergies> getAllergy() {
-        return allergy;
+        return allergies;
     }
 
     public void setAllergy(List<Allergies> allergy) {
-        this.allergy = allergy;
+        this.allergies = allergy;
     }
 
     public int getFloor() {

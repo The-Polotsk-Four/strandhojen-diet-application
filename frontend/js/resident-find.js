@@ -10,8 +10,10 @@ async function findBeboer(event) {
 
     const resident = await res.json();
     const resultDiv = document.getElementById("result");
+    console.log(resultDiv.innerHTML);
     resultDiv.innerHTML = `
         <p>ID: ${resident.id}</p>
+        <p>Navn: ${resident.name}</p>
         <p>Fødevarens konsistens: ${resident.foodConsisatency}</p>
         <p>Alder: ${resident.age}</p>
         <p>Vægt: ${resident.weight}</p>
