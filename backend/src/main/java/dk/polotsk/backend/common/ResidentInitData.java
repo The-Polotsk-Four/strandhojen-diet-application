@@ -146,6 +146,10 @@ public class ResidentInitData implements CommandLineRunner {
 
         Resident resident08 = new Resident();
         resident08.setName("Louie");
+<<<<<<< Updated upstream
+=======
+        resident08.setFoodConsistency(FoodConsistency.SOFTFOOD);
+>>>>>>> Stashed changes
         resident08.setAge(LocalDate.parse("1951-05-21"));
         resident08.setWeight(55.00);
         resident08.setHeight(155.00);
@@ -171,6 +175,10 @@ public class ResidentInitData implements CommandLineRunner {
         resident10.setHeight(190.00);
         resident10.calculateBmi();
         resident10.setFloor(2);
+<<<<<<< Updated upstream
+=======
+        resident10.setFoodConsistency(FoodConsistency.TUBEFEEDING);
+>>>>>>> Stashed changes
         resident10.setRoomNumber(203);
         residentRepository.save(resident10);
 
