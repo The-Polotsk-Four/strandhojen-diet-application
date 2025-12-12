@@ -70,7 +70,7 @@ public class ResidentController {
 
 
     @PutMapping("/update/{residentId}/addDiet")
-    public ResidentDto addAllergy(
+    public ResidentDto addDiet(
             @PathVariable Long residentId,
             @RequestBody DietDto diet) {
 

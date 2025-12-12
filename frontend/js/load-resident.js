@@ -78,7 +78,7 @@ function renderResident(resident, user) {
     document.getElementById("status").innerHTML =
         `<span class="label">Status:</span> ${resident.status ? "Aktiv" : "Inaktiv"}`;
 
-    if (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN"){
+    if (user && (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN")) {
     document.getElementById("allergies").innerHTML =
         `<span class="label">Allergier:</span>
      ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}
