@@ -7,9 +7,7 @@ let diets = [];
 let selectedResident = null;
 let selectedDiets = [];
 
-// --------------------------------------------------
-// INIT
-// --------------------------------------------------
+
 async function initApp() {
     await loadResidents();
     await loadDiets();
@@ -27,9 +25,7 @@ function setupEventListeners() {
     document.addEventListener("click", closeDropdown);
 }
 
-// --------------------------------------------------
-// LOADERS
-// --------------------------------------------------
+
 async function loadResidents() {
     try {
         const res = await fetch(`${BASE_URL}/api/residents`, { credentials: "include" });
@@ -49,9 +45,7 @@ async function loadDiets() {
     }
 }
 
-// --------------------------------------------------
-// RESIDENT TABLE
-// --------------------------------------------------
+
 function renderResidents(list) {
     const tbody = document.getElementById("userTableBody");
     tbody.innerHTML = "";
@@ -79,9 +73,7 @@ function renderResidents(list) {
     });
 }
 
-// --------------------------------------------------
-// EDITOR OPEN
-// --------------------------------------------------
+
 function openDietEditor(resident) {
     selectedResident = resident;
     selectedDiets = Array.isArray(resident.diets) ? [...resident.diets] : [];
@@ -94,9 +86,7 @@ function openDietEditor(resident) {
     showAllTags();
 }
 
-// --------------------------------------------------
-// TAG RENDERING
-// --------------------------------------------------
+
 function renderTags() {
     const tagList = document.getElementById("tagList");
     tagList.innerHTML = "";
@@ -114,9 +104,7 @@ function renderTags() {
     });
 }
 
-// --------------------------------------------------
-// REMOVE DIET
-// --------------------------------------------------
+
 async function removeTag(id) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeDiet/${id}`, {
         method: "DELETE"
@@ -128,9 +116,7 @@ async function removeTag(id) {
     loadResidents();
 }
 
-// --------------------------------------------------
-// SEARCH + DROPDOWN
-// --------------------------------------------------
+
 function onDietSearch(e) {
     const dropdown = document.getElementById("dropdown");
     const search = e.target.value.toLowerCase();
@@ -170,9 +156,7 @@ function closeDropdown(e) {
     }
 }
 
-// --------------------------------------------------
-// ADD DIET
-// --------------------------------------------------
+
 async function addDietToResident(diet) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
@@ -197,9 +181,7 @@ async function saveNewDiet() {
     renderTags();
 }
 
-// --------------------------------------------------
-// SHOW ALL DIETS PANEL
-// --------------------------------------------------
+
 function showAllTags() {
     const dropdown = document.getElementById("dropdown");
     dropdown.innerHTML = "";
@@ -231,9 +213,7 @@ function showAllTags() {
     });
 }
 
-// --------------------------------------------------
-// “All diets” grid panel
-// --------------------------------------------------
+
 async function chooseDiet(diet) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
