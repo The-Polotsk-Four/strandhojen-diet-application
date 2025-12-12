@@ -4,15 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Opret Beboer</title>
+    <script src ="../js/components/header.js" type="text/javascript" defer></script>
+    <script src="../js/components/footer.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="/css/resident-create.css" />
 </head>
+<header-component></header-component>
 <body>
 <div class="form-box">
     <h1>Opret Beboer</h1>
     <form id="createForm" onsubmit="opretBeboer(event)">
 
         <label> Fornavn </label>
-        <input type="text" id="firstName" required />
+        <input type="text" id="name" required />
 
         <label>Alder (YYYY-MM-DD)</label>
         <input type="text" id="age" required />
@@ -30,14 +35,14 @@
         <input type="number" id="roomNumber" required />
 
         <label>Fødevarens konsistens</label>
-        <select id="foodconsistency" required>
+        <select id="foodConsistency" required>
             <option value="SOLID">Solid</option>
             <option value="SOFTFOOD">Softfood</option>
             <option value="TUBEFEEDING">Tubefeeding</option>
         </select>
 
         <label>Preference (komma-separeret)</label>
-        <input type="text" id="preference"  placeholder="fx Glutenfri,Vegetar"  />
+        <input type="text" id="preferences"  placeholder="fx Glutenfri,Vegetar"  />
 
         <label>Diet (komma-separeret)</label>
         <input type="text" id="diets" placeholder="fx Lavkalorie,Keto" />
@@ -54,4 +59,5 @@
 </div>
 <script src="/js/resident-create.js"></script>
 </body>
+<footer-component></footer-component>
 </html>

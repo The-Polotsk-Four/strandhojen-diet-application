@@ -111,21 +111,22 @@ public class ResidentInitData implements CommandLineRunner {
         residentRepository.save(resident04);
 
         Resident resident05 = new Resident();
-        resident04.setName("Luka");
-        resident04.setAge(LocalDate.parse("1939-03-03"));
-        resident04.setWeight(80.00);
-        resident04.setHeight(178.00);
-        resident04.calculateBmi();
+        resident05.setName("Luka");
+        resident05.setAge(LocalDate.parse("1939-03-03"));
+        resident05.setWeight(80.00);
+        resident05.setHeight(178.00);
+        resident05.calculateBmi();
 //        resident02.addAllergy(gluten);
 //        resident02.addAllergy(lactose);
 //        resident02.addDiet(vegetarian);
 //        resident04.addPreference(banana);
-        resident04.setFloor(2);
-        resident04.setRoomNumber(203);
+        resident05.setFloor(2);
+        resident05.setRoomNumber(203);
         residentRepository.save(resident05);
 
         Resident resident06 = new Resident();
         resident06.setName("Luna");
+        resident06.setFoodConsistency(FoodConsistency.SOFTFOOD);
         resident06.setAge(LocalDate.parse("1935-06-08"));
         resident06.setWeight(99.00);
         resident06.setHeight(169.00);
@@ -146,10 +147,7 @@ public class ResidentInitData implements CommandLineRunner {
 
         Resident resident08 = new Resident();
         resident08.setName("Louie");
-<<<<<<< Updated upstream
-=======
-        resident08.setFoodConsistency(FoodConsistency.SOFTFOOD);
->>>>>>> Stashed changes
+        resident06.setFoodConsistency(FoodConsistency.SOFTFOOD);
         resident08.setAge(LocalDate.parse("1951-05-21"));
         resident08.setWeight(55.00);
         resident08.setHeight(155.00);
@@ -175,10 +173,7 @@ public class ResidentInitData implements CommandLineRunner {
         resident10.setHeight(190.00);
         resident10.calculateBmi();
         resident10.setFloor(2);
-<<<<<<< Updated upstream
-=======
-        resident10.setFoodConsistency(FoodConsistency.TUBEFEEDING);
->>>>>>> Stashed changes
+        resident06.setFoodConsistency(FoodConsistency.TUBEFEEDING);
         resident10.setRoomNumber(203);
         residentRepository.save(resident10);
 
