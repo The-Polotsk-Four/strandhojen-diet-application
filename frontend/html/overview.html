@@ -4,27 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oversigt</title>
-<<<<<<< Updated upstream
-=======
     <script defer src="../js/overview.js"></script>
     <script src ="../js/components/header.js" type="text/javascript" defer></script>
     <script src="../js/components/footer.js" type="text/javascript" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
->>>>>>> Stashed changes
 </head>
 <header-component></header-component>
 <body>
     <div id="selectors">
-        <label for="floor-selector">Vælg etage:</label>
-        <select id="floor-selector">
-            <option value="" disabled selected>Vælg en etage</option>
-            <option value=0>Stue etage</option>
-            <option value=1>Første etage</option>
-            <option value=2>Anden etage</option>
-            <option value=3>Tredje etage</option>
-            <option value="-1">reset</option>
-        </select>
+        <div>
+            <label for="floor-selector">Vælg etage:</label>
+            <select id="floor-selector">
+                <option value="" disabled selected>Vælg en etage</option>
+                <option value=0>Stue etage</option>
+                <option value=1>Første etage</option>
+                <option value=2>Anden etage</option>
+                <option value=3>Tredje etage</option>
+                <option value="-1" selected>Alle etager</option>
+            </select>
+        </div>
+        <div>
+            <label for="allergy-selector">Vælg allergi</label>
+            <select multiple id="allergy-selector">
+
+            </select>
+        </div>
     </div>
     <div id="tables">
         <h2>Solid føde</h2>
