@@ -74,6 +74,11 @@ public class ResidentController {
         return ResponseEntity.ok(residentService.getAllResidents());
     }
 
+    @GetMapping("/getresident")
+    public ResponseEntity<List<ResidentDto>> getResidentByName(@RequestParam(value = "residentName") String residentName){
+    return ResponseEntity.ok(residentService.findResidentByName(residentName));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         residentService.deleteResident(id);

@@ -1,6 +1,5 @@
 package dk.polotsk.backend.Catalog.Service;
 
-import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
@@ -105,5 +104,18 @@ public class ResidentService {
             throw new NotFoundException("Resident not found with id: " + id);
         }
         residentRepository.deleteById(id);
+    }
+
+    public List<ResidentDto> findResidentByName(String name){
+        List<Resident> residents = residentRepository.findResidentByName(name);
+        if (residents.isEmpty()){
+            throw new RuntimeException("Can't find resident with name: "+name);
+        }
+
+        List<ResidentDto> residentDtos = new ArrayList<>();
+        for (Resident resident : residents){
+            residentDtos.add(Mapper.toDto(resident));
+        }
+        return residentDtos;
     }
 }
