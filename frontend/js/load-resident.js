@@ -1,4 +1,4 @@
-import { getCurrentUser } from './fetchUser.js';
+import {getCurrentUser} from './fetchUser.js';
 
 document.addEventListener("DOMContentLoaded", initApp);
 
@@ -79,8 +79,8 @@ function renderResident(resident, user) {
         `<span class="label">Status:</span> ${resident.status ? "Aktiv" : "Inaktiv"}`;
 
     if (user && (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN")) {
-    document.getElementById("allergies").innerHTML =
-        `<span class="label">Allergier:</span>
+        document.getElementById("allergies").innerHTML =
+            `<span class="label">Allergier:</span>
      ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}
      <br>
      <a href="resident-add-allergies.html" class="btn">Tilføj flere allergi</a>`;
@@ -100,20 +100,18 @@ function renderResident(resident, user) {
             `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.map(diet => diet.name).join(", ") : "Intet at tage højde for"}`;
     }
 
+    // Commented preference for now because we're not gonna use it going forward
+    // document.getElementById("preference").innerHTML =
+    //     `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.map(preference => preference.name).join(", ") : "Ingen preferencer"}`;
 
-    document.getElementById("preference").innerHTML =
-        `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.map(preference => preference.name).join(", ") : "Ingen preferencer"}`;
-
-    if (resident.comment !== null){
+    if (resident.comment !== null) {
         document.getElementById("comment").innerHTML =
-        `<span class="label">Kommentar:</span> ${resident.comment}`;
+            `<span class="label">Kommentar:</span> ${resident.comment}`;
+    } else {
+        document.getElementById("comment").innerHTML =
+            `<span class="label">Kommentar: </span> Ingen kommentarer`;
     }
-
-
-
-
 }
-
 
 function residentNotSelected() {
     if (residentId < 1) {
