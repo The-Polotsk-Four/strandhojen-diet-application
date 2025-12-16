@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", initApp);
 const floorSelector = document.querySelector("#floor-selector");
 const allergySelector = document.querySelector("#allergy-selector");
 let activeFloor = -1;
-let allergies
+let allergies;
+let selectedAllergies = [];
 let residents;
 
 async function initApp() {
@@ -48,10 +49,34 @@ function renderAllergy(allergy) {
 }
 
 function getAllergyValue() {
-    console.log(allergySelector.selectedOptions);
+    // console.log('allergy value:');
+    // console.log(allergySelector);
+    selectedAllergies = [];
     for (let option in allergySelector.selectedOptions) { 
-        console.log(allergySelector.selectedOptions[option].value);
+        const value = Number(allergySelector.selectedOptions[option].value);
+        if (value) {
+            allergies.forEach(allergy => {
+                if (allergy.id === value) {
+                    selectedAllergies.push(allergy);
+                }
+            });
+        }
     }
+    console.log(selectedAllergies);
+}
+
+function getAllergies(resident) {
+    // console.log(allergies);
+    // console.log(resident.allergies);
+    let listOfIds = [];
+    resident.allergies.forEach(allergy => {
+        listOfIds.push(allergy.id);
+    });
+    // console.log(listOfIds);
+    const hasAllergies = allergies.some(allergy => listOfIds.includes(allergy.id));
+    // console.log(resident.name);
+    // console.log('has allergies');
+    // console.log(hasAllergies);
 }
 
 async function fetchResidents() {
@@ -79,6 +104,9 @@ function renderResident(resident) {
     row.appendChild(renderResidentCell(resident.name));
     row.appendChild(renderResidentCell(resident.FoodConsistency));
     row.appendChild(renderResidentCell(resident.floor));
+    row.appendChild(renderResidentCell(resident.allergies));
+    
+    getAllergies(resident);
     
     if (activeFloor === -1 || resident.floor === activeFloor) {
         switch (resident.FoodConsistency) {
@@ -109,6 +137,5 @@ function getFloorValue(event) {
     document.querySelector("#tube-table").innerHTML = '';
     renderResidents();
     
-
     console.log(event.target);
 }
