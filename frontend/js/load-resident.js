@@ -78,7 +78,7 @@ function renderResident(resident, user) {
     document.getElementById("status").innerHTML =
         `<span class="label">Status:</span> ${resident.status ? "Aktiv" : "Inaktiv"}`;
 
-    if (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN"){
+    if (user && (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN")) {
     document.getElementById("allergies").innerHTML =
         `<span class="label">Allergier:</span>
      ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}
@@ -90,8 +90,16 @@ function renderResident(resident, user) {
      ${resident.allergies.length ? resident.allergies.map(a => a.name).join(", ") : "Ingen allergier"}`
     }
 
-    document.getElementById("diet").innerHTML =
-        `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.map(diet => diet.name).join(", ") : "Intet at tage højde for"}`;
+    if (user && (user.userrole === "SYGEPLEJERSK" || user.userrole === "ADMIN")) {
+        document.getElementById("diet").innerHTML =
+            `<span class="label">Diæt:</span>${resident.diet.length ? resident.diet.map(d => d.name).join(", ") : "Intet at tage højde for"}
+            <br>
+            <a href="resident-diet.html" class="btn">Tilføj diæt</a>`;
+    } else {
+        document.getElementById("diet").innerHTML =
+            `<span class="label">Diæt:</span> ${resident.diet.length ? resident.diet.map(diet => diet.name).join(", ") : "Intet at tage højde for"}`;
+    }
+
 
     document.getElementById("preference").innerHTML =
         `<span class="label">Præferencer:</span> ${resident.preference.length ? resident.preference.map(preference => preference.name).join(", ") : "Ingen preferencer"}`;
