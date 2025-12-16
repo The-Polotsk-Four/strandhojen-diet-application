@@ -6,6 +6,7 @@
     <title>Opret Beboer</title>
     <script src ="../js/components/header.js" type="text/javascript" defer></script>
     <script src="../js/components/footer.js" type="text/javascript" defer></script>
+    <script src="../js/resident-create.js" type="module" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="/css/resident-create.css" />
@@ -53,11 +54,15 @@
         <label>Kommentar</label>
         <textarea id="comment"></textarea>
 
+        <label>Vælg sygeplejerske</label>
+        <select id="nurse" required>
+            <option value="option">-- Vælg sygeplejerske --</option>
+        </select>
+
         <button type="submit">Opret</button>
     </form>
     <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
 </div>
-<script src="/js/resident-create.js"></script>
 </body>
 <footer-component></footer-component>
 </html>

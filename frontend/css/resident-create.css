@@ -49,7 +49,7 @@ input:focus, select:focus, textarea:focus {
 
 textarea {
     min-height: 100px;
-    grid-column: span 3;
+    grid-column: span 1;
     resize: vertical;
 }
 

@@ -1,7 +1,16 @@
-
-
+import { loadNurses } from "./loadNurses.js";
 async function opretBeboer(event) {
     event.preventDefault();
+
+    const nurse = await loadNurses();
+
+
+    const nurseEmail = document.getElementById("nurse").value;
+
+    if (!nurseEmail) {
+        alert("Vælg venligst en sygeplejerske.");
+        return;
+    }
 
     const name = document.getElementById("name").value;
     const age = document.getElementById("age").value;
@@ -45,16 +54,17 @@ async function opretBeboer(event) {
     };
 
     try {
-        const response = await fetch("/api/residents/create", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(residentData)
-        });
+        const response = await fetch(
+            `/api/residents/create?nurseEmail=${encodeURIComponent(nurseEmail)}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(residentData)
+            }
+        );
 
         if (response.ok) {
-            alert("Beboer oprettet");
+            alert("Beboer oprettet og email sendt til sygeplejersken");
             window.location.href = "resident-admin.html";
         } else {
             const errorData = await response.json();

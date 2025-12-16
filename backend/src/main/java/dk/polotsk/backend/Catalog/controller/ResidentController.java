@@ -1,11 +1,13 @@
 package dk.polotsk.backend.Catalog.controller;
-
+import dk.polotsk.backend.Catalog.Service.EmailSenderService;
 import dk.polotsk.backend.Catalog.Service.AllergyService;
+import dk.polotsk.backend.Catalog.Service.NotificationService;
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.repository.AllergyRepository;
+import dk.polotsk.backend.Catalog.repository.NotificationRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +20,36 @@ public class ResidentController {
     private final ResidentService residentService;
     private final AllergyRepository allergyRepository;
     private final AllergyService allergyService;
+    private final EmailSenderService emailSenderService;
+    private final NotificationService notificationService;
 
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notficationService) {
     this.residentService = residentService;
         this.allergyRepository = allergyRepository;
         this.allergyService = allergyService;
+        this.emailSenderService = emailSenderService;
+        this.notificationService = notficationService;
     }
 
-@PostMapping("/create")
-    public ResponseEntity<ResidentDto> create(@RequestBody ResidentDto residentDto){
-    return ResponseEntity.ok(residentService.createResident(residentDto));
-}
+    @PostMapping("/create")
+    public ResponseEntity<ResidentDto> create(
+            @RequestParam String nurseEmail,
+            @RequestBody ResidentDto residentDto
+    ) {
+        ResidentDto saved = residentService.createResident(residentDto);
+
+        notificationService.create(
+                "Ny beboer oprettet: " + saved.name() +
+                        " (Stue " + saved.roomNumber() + ")"
+        );
+
+        emailSenderService.sendEmail(
+                nurseEmail,
+                "Ny beboer oprettet",
+                "Der er oprettet en ny beboer: " + saved.name()
+        );
+        return ResponseEntity.ok(saved);
+    }
 
 @PutMapping("/update/{id}")
     public ResponseEntity<ResidentDto> update(

@@ -1,0 +1,32 @@
+
+
+#notifications-box {
+    border: 1px solid #ddd;
+    padding: 15px;
+    max-width: 400px;
+    margin-top: 30px;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+#notifications-box h3 {
+    margin-top: 0;
+}
+
+.notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background-color: #f0f0f0;
+}
+
+.empty {
+    color: #777;
+}

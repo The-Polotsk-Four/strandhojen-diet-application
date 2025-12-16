@@ -44,9 +44,9 @@ public class BackendApplication {
     }
 
     //Email Sender
-    @EventListener(ApplicationReadyEvent.class)
-    public void sendEmail() {
-        SenderService.sendEmail("test@gmail.com", "Test Email", "This is a test email");
-    }
+    //@EventListener(ApplicationReadyEvent.class)
+    //public void sendEmail() {
+    //SenderService.sendEmail("test@gmail.com", "Test Email", "This is a test email");
+    //}
 
 }
