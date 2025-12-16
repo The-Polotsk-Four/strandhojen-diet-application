@@ -28,7 +28,7 @@ function setupEventListeners() {
 
 async function loadResidents() {
     try {
-        const res = await fetch(`${BASE_URL}/api/residents`, { credentials: "include" });
+        const res = await fetch(`${BASE_URL}/api/residents`, {credentials: "include"});
         residents = await res.json();
         renderResidents(residents);
     } catch {
@@ -76,7 +76,7 @@ function renderResidents(list) {
 
 function openDietEditor(resident) {
     selectedResident = resident;
-    selectedDiets = Array.isArray(resident.diets) ? [...resident.diets] : [];
+    selectedDiets = Array.isArray(resident.diet) ? [...resident.diet] : [];
 
     document.getElementById("dietSection").style.display = "block";
     document.getElementById("residentNameHeader").textContent =
@@ -160,8 +160,9 @@ function closeDropdown(e) {
 async function addDietToResident(diet) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
+        credentials: "include",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ name: diet.name })
+        body: JSON.stringify({name: diet.name})
     });
 
     await loadResidents();
@@ -175,9 +176,9 @@ async function saveNewDiet() {
     const name = document.getElementById("dietSearch").value.trim();
     if (!name) return alert("Skriv en diæt først");
 
-    await addDietToResident({ name });
+    await addDietToResident({name});
 
-    selectedDiets.push({ name });
+    selectedDiets.push({name});
     renderTags();
 }
 
@@ -218,7 +219,7 @@ async function chooseDiet(diet) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ name: diet.name })
+        body: JSON.stringify({name: diet.name})
     });
 
     selectedDiets.push(diet);

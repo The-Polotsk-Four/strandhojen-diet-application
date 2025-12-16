@@ -26,7 +26,7 @@ function setupEventListeners() {
 
 async function loadResidents() {
     try {
-        const res = await fetch(`${BASE_URL}/api/residents`, { credentials: "include" });
+        const res = await fetch(`${BASE_URL}/api/residents`, {credentials: "include"});
         residents = await res.json();
         renderResidents(residents);
     } catch {
@@ -78,7 +78,8 @@ function openAllergyEditor(resident) {
 
 
     selectedResident = resident;
-    selectedAllergies = [...resident.allergies];
+    selectedAllergies = Array.isArray(resident.allergies) ? [...resident.allergies] : [];
+    // selectedAllergies = [...resident.allergies];
 
     document.getElementById("allergySection").style.display = "block";
     document.getElementById("residentNameHeader").textContent =
@@ -116,6 +117,7 @@ async function removeTag(id) {
     renderTags();
     loadResidents();
 }
+
 function onAllergySearch(e) {
     const dropdown = document.getElementById("dropdown");
     const search = e.target.value.toLowerCase();
@@ -159,7 +161,8 @@ function closeDropdown(e) {
 async function addAllergyToResident(allergy) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json" },
+        credentials: "include",
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({name: allergy.name})
     });
 
@@ -180,12 +183,12 @@ async function saveNewAllergy() {
 
 }
 
-    function showAllTags() {
-        const dropdown = document.getElementById("dropdown");
-        dropdown.innerHTML = "";
+function showAllTags() {
+    const dropdown = document.getElementById("dropdown");
+    dropdown.innerHTML = "";
 
-        const available = allergies.filter(a =>
-            !selectedAllergies.some(sel => sel.id === a.id)
+    const available = allergies.filter(a =>
+        !selectedAllergies.some(sel => sel.id === a.id)
     );
 
     if (available.length === 0) {
@@ -195,48 +198,48 @@ async function saveNewAllergy() {
 
     dropdown.style.display = "block"
 
-        available.forEach(a => {
-            const item = document.createElement("div");
-            item.className = "dropdown-item";
-            item.textContent = a.name;
+    available.forEach(a => {
+        const item = document.createElement("div");
+        item.className = "dropdown-item";
+        item.textContent = a.name;
 
-            item.addEventListener("click", async () => {
-                await addAllergyToResident(a);
-                selectedAllergies.push(a);
-                renderTags();
-                dropdown.style.display = "none";
-            });
-
-            dropdown.appendChild(item);
+        item.addEventListener("click", async () => {
+            await addAllergyToResident(a);
+            selectedAllergies.push(a);
+            renderTags();
+            dropdown.style.display = "none";
         });
-    }
 
-    async function chooseAllergy(allergy) {
-    await fetch (`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
-       method: "PUT",
-       headers: {"Conten-Type": "application/json"},
-       body: JSON.stringify({name: allergy.name})
+        dropdown.appendChild(item);
+    });
+}
+
+async function chooseAllergy(allergy) {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
+        method: "PUT",
+        headers: {"Conten-Type": "application/json"},
+        body: JSON.stringify({name: allergy.name})
     });
 
     selectedAllergies.push(allergy);
     loadResidents();
-    }
+}
 
-    function renderAllAllergies() {
-        const panel = document.getElementById("a");
-        if (!panel) return;
+function renderAllAllergies() {
+    const panel = document.getElementById("a");
+    if (!panel) return;
 
-        panel.innerHTML = "";
+    panel.innerHTML = "";
 
-        allergies.forEach(a => {
-            const item = document.createElement("div");
-            item.className = "allergy-item";
-            item.textContent = a.name;
+    allergies.forEach(a => {
+        const item = document.createElement("div");
+        item.className = "allergy-item";
+        item.textContent = a.name;
 
-            item.addEventListener("click", () => chooseAllergy(a));
+        item.addEventListener("click", () => chooseAllergy(a));
 
-            panel.appendChild(item);
-        })
+        panel.appendChild(item);
+    })
 
-    }
+}
 
