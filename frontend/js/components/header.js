@@ -5,6 +5,7 @@ class HeaderComponent extends HTMLElement {
     <nav>
         <ul>
             <li><a href="../html/index.html">Hjem</a></li>
+            <li><a href="../html/resident-page.html">Beboer</a></li>
             <li><a href="../html/resident.create.html">Opret beboer</a></li>
             <li><a href="../html/resident-update.html">Opdater beboer </a></li>
             <li><a href="../html/resident-find.html">Søg efter beboer</a></li>
