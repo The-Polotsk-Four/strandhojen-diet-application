@@ -1,11 +1,15 @@
 package dk.polotsk.backend.Catalog.controller;
 
 import dk.polotsk.backend.Catalog.Service.AllergyService;
+import dk.polotsk.backend.Catalog.Service.DietService;
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.AllergiesDto;
+import dk.polotsk.backend.Catalog.dto.DietDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
+import dk.polotsk.backend.Catalog.model.Diet;
 import dk.polotsk.backend.Catalog.repository.AllergyRepository;
+import dk.polotsk.backend.Catalog.repository.DietRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +22,15 @@ public class ResidentController {
     private final ResidentService residentService;
     private final AllergyRepository allergyRepository;
     private final AllergyService allergyService;
+    private final DietRepository dietRepository;
+    private final DietService dietService;
 
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, DietRepository dietRepository, DietService dietService) {
     this.residentService = residentService;
         this.allergyRepository = allergyRepository;
         this.allergyService = allergyService;
+        this.dietRepository = dietRepository;
+        this.dietService = dietService;
     }
 
 @PostMapping("/create")
@@ -58,6 +66,26 @@ public class ResidentController {
     }
 
     return residentService.addAllergy(residentId, dto.id());
+    }
+
+
+    @PutMapping("/update/{residentId}/addDiet")
+    public ResidentDto addDiet(
+            @PathVariable Long residentId,
+            @RequestBody DietDto diet) {
+
+        DietDto dto;
+
+        System.out.println(residentId);
+        System.out.println(diet);
+        if (!dietRepository.existsByName(diet.name())){
+            dto = dietService.createDiet(diet);
+        } else {
+            dto = dietService.getDietByName(diet.name());
+            System.out.println("Diet eksisterer allerede");
+        }
+
+        return residentService.addDiet(residentId, dto.id());
     }
 
 @GetMapping("/{id}")
@@ -96,6 +124,15 @@ public class ResidentController {
     ) {
 
         return residentService.removeAllergy(residentId, allergyId);
+    }
+
+    @DeleteMapping("/update/{residentId}/removeDiet/{dietId}")
+    public ResidentDto removeDiet(
+            @PathVariable Long residentId,
+            @PathVariable Long dietId
+    ) {
+
+        return residentService.removeDiet(residentId, dietId);
     }
 
 }
