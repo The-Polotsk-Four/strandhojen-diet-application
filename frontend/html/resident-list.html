@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../css/resident-list.css">
+
+    <script src="../js/resident-list.js" type="text/javascript" defer></script>
+</head>
+<body>
+<div id="resident-div">
+    <form id="resident-form">
+        <p>Søg efter beboer: </p><br>
+        <input type="text" id="name" name="name" placeholder="Jørgen"><br>
+        <button id="button" type="submit">Søg</button>
+    </form>
+</div>
+
+
+<div>
+    <table id="residentTable">
+        <thead>
+        <tr>
+            <th>Navn</th>
+            <th>Alder</th>
+            <th>Sal</th>
+            <th>Værelses Nr.</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody id="tbody-table">
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

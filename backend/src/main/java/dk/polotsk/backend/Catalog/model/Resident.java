@@ -31,9 +31,9 @@ public class Resident {
     @Enumerated(EnumType.STRING)
     private FoodConsistency foodconsistency = FoodConsistency.SOLID;
 
-    @OneToMany
+    @ManyToMany
     private List<Preference> preference = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     private List<Diet> diet = new ArrayList<>();
     @ManyToMany
     @JoinTable(

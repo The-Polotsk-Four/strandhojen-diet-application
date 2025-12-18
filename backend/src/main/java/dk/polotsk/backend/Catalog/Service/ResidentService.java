@@ -1,12 +1,13 @@
 package dk.polotsk.backend.Catalog.Service;
 
-import dk.polotsk.backend.Catalog.dto.AllergiesDto;
 import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.mapper.Mapper;
 import dk.polotsk.backend.Catalog.model.Allergies;
+import dk.polotsk.backend.Catalog.model.Diet;
 import dk.polotsk.backend.Catalog.model.Resident;
 import dk.polotsk.backend.Catalog.repository.AllergyRepository;
+import dk.polotsk.backend.Catalog.repository.DietRepository;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,12 @@ public class ResidentService {
 
     private final ResidentRepository residentRepository;
     private final AllergyRepository allergyRepository;
+    private final DietRepository dietRepository;
 
-    public ResidentService(ResidentRepository residentRepository, AllergyRepository allergyRepository) {
+    public ResidentService(ResidentRepository residentRepository, AllergyRepository allergyRepository, DietRepository dietRepository) {
         this.residentRepository = residentRepository;
         this.allergyRepository = allergyRepository;
+        this.dietRepository = dietRepository;
     }
 
     public ResidentDto createResident(ResidentDto residentDto){
@@ -70,6 +73,38 @@ public class ResidentService {
         return Mapper.toDto(resident);
     }
 
+    public ResidentDto addDiet(Long residentId, Long dietId) {
+        Resident resident = residentRepository.findById(residentId)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id: " + residentId));
+
+        Diet diet = dietRepository.findById(dietId)
+                .orElseThrow(() -> new RuntimeException("Diet not found with id: " + dietId));
+
+
+        if (!resident.getDiet().contains(diet)) {
+            resident.addDiet(diet);
+            residentRepository.save(resident);
+        }
+
+        return Mapper.toDto(resident);
+    }
+
+    public ResidentDto removeDiet(Long residentId, Long dietId) {
+
+        Resident resident = residentRepository.findById(residentId)
+                .orElseThrow(() -> new RuntimeException("Resident not found with id " + residentId));
+
+        Diet diet = dietRepository.findById(dietId)
+                .orElseThrow(() -> new RuntimeException("Diet not found with id " + dietId));
+
+        if  (resident.getDiet().contains(diet)){
+            resident.removeDiet(diet);
+            residentRepository.save(resident);
+        }
+
+        return Mapper.toDto(resident);
+    }
+
     public ResidentDto removeAllergy(Long residentId, Long allergyId) {
 
         Resident resident = residentRepository.findById(residentId)
@@ -105,5 +140,18 @@ public class ResidentService {
             throw new NotFoundException("Resident not found with id: " + id);
         }
         residentRepository.deleteById(id);
+    }
+
+    public List<ResidentDto> findResidentByName(String name){
+        List<Resident> residents = residentRepository.findResidentByName(name);
+        if (residents.isEmpty()){
+            throw new RuntimeException("Can't find resident with name: "+name);
+        }
+
+        List<ResidentDto> residentDtos = new ArrayList<>();
+        for (Resident resident : residents){
+            residentDtos.add(Mapper.toDto(resident));
+        }
+        return residentDtos;
     }
 }
