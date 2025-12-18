@@ -170,6 +170,9 @@ function enableEditMode(resident) {
         <span class="label">Kommentar:</span><br>
         <textarea id="editComment">${resident.comment ?? ""}</textarea>
     `;
+    if (document.getElementById("editComment").value === "" ){
+        document.getElementById("editComment").innerHTML = "Ingen kommentar";
+    }
 
     document.getElementById("comment").insertAdjacentHTML(
         "afterend",
