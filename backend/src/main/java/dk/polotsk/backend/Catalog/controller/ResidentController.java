@@ -26,23 +26,19 @@ public class ResidentController {
     private final AllergyService allergyService;
     private final EmailSenderService emailSenderService;
     private final NotificationService notificationService;
+    private final DietRepository dietRepository;
+    private final DietService dietService;
 
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notificationService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notificationService, DietRepository dietRepository, DietService dietService) {
     this.residentService = residentService;
         this.allergyRepository = allergyRepository;
         this.allergyService = allergyService;
         this.emailSenderService = emailSenderService;
         this.notificationService = notificationService;
-    private final DietRepository dietRepository;
-    private final DietService dietService;
-
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, DietRepository dietRepository, DietService dietService) {
-    this.residentService = residentService;
-        this.allergyRepository = allergyRepository;
-        this.allergyService = allergyService;
         this.dietRepository = dietRepository;
         this.dietService = dietService;
     }
+
 
     @PostMapping("/create")
     public ResponseEntity<ResidentDto> create(
