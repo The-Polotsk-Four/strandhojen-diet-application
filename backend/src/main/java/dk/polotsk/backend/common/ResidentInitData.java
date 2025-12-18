@@ -82,6 +82,7 @@ public class ResidentInitData implements CommandLineRunner {
         resident01.addAllergy(nuts);
         resident01.setFloor(1);
         resident01.setRoomNumber(101);
+        resident01.setComment("Kan ikke lide tomater, og bliver sur hvis du siger han er gammel");
         residentRepository.save(resident01);
 
         Resident resident02 = new Resident();

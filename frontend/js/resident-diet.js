@@ -3,26 +3,28 @@ window.addEventListener("DOMContentLoaded", initApp);
 const BASE_URL = "http://localhost:8080";
 
 let residents = [];
-let allergies = [];
+let diets = [];
 let selectedResident = null;
-let selectedAllergies = [];
+let selectedDiets = [];
+
 
 async function initApp() {
     await loadResidents();
-    await loadAllergies();
+    await loadDiets();
     setupEventListeners();
-    renderAllAllergies();
+    renderAllDiets();
 }
 
 function setupEventListeners() {
-    document.getElementById("allergySearch")
-        .addEventListener("input", onAllergySearch);
+    document.getElementById("dietSearch")
+        .addEventListener("input", onDietSearch);
 
     document.getElementById("saveBtn")
-        .addEventListener("click", saveNewAllergy);
+        .addEventListener("click", saveNewDiet);
 
     document.addEventListener("click", closeDropdown);
 }
+
 
 async function loadResidents() {
     try {
@@ -34,14 +36,15 @@ async function loadResidents() {
     }
 }
 
-async function loadAllergies() {
+async function loadDiets() {
     try {
-        const res = await fetch(`${BASE_URL}/api/allergies`);
-        allergies = await res.json();
+        const res = await fetch(`${BASE_URL}/api/diets`);
+        diets = await res.json();
     } catch {
-        console.error("Kunne ikke hente allergier");
+        console.error("Kunne ikke hente diæter");
     }
 }
+
 
 function renderResidents(list) {
     const tbody = document.getElementById("userTableBody");
@@ -51,96 +54,91 @@ function renderResidents(list) {
         const tr = document.createElement("tr");
         tr.style.cursor = "pointer";
 
-        const allergiesHTML = resident.allergies?.length
-            ? resident.allergies.map(a => `<li>${a.name}</li>`).join("")
+        const dietHtml = resident.diet?.length
+            ? resident.diet.map(a => `<li>${a.name}</li>`).join("")
             : "Ingen";
 
+
         tr.innerHTML = `
-            <td>${resident.id}</td>
             <td>${resident.name}</td>
             <td>${resident.age ?? ""}</td>
-            <td>${resident.weight ?? ""}</td>
-            <td>${resident.height ?? ""}</td>
-            <td>${resident.bmi ?? ""}</td>
             <td>${resident.floor}</td>
             <td>${resident.roomNumber}</td>
             <td>${resident.status ? "Aktiv" : "Inaktiv"}</td>
-            <td><ul>${allergiesHTML}</ul></td>
+            <td><ul>${dietHtml}</ul></td>
         `;
 
-        tr.addEventListener("click", () => openAllergyEditor(resident));
-
+        tr.addEventListener("click", () => openDietEditor(resident));
         tbody.appendChild(tr);
     });
 }
 
-function openAllergyEditor(resident) {
 
-
+function openDietEditor(resident) {
     selectedResident = resident;
-    selectedAllergies = Array.isArray(resident.allergies) ? [...resident.allergies] : [];
-    // selectedAllergies = [...resident.allergies];
+    selectedDiets = Array.isArray(resident.diet) ? [...resident.diet] : [];
 
-    document.getElementById("allergySection").style.display = "block";
+    document.getElementById("dietSection").style.display = "block";
     document.getElementById("residentNameHeader").textContent =
         `Beboer: ${resident.name}`;
-
 
     renderTags();
     showAllTags();
 }
 
+
 function renderTags() {
     const tagList = document.getElementById("tagList");
     tagList.innerHTML = "";
 
-    selectedAllergies.forEach(a => {
+    selectedDiets.forEach(d => {
         const tag = document.createElement("div");
         tag.className = "tag";
 
         tag.innerHTML = `
-            ${a.name}
-            <button onclick="removeTag(${a.id})">X</button>
+            ${d.name}
+            <button onclick="removeTag(${d.id})">X</button>
         `;
 
         tagList.appendChild(tag);
     });
 }
 
+
 async function removeTag(id) {
-    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeAllergy/${id}`, {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeDiet/${id}`, {
         method: "DELETE"
     });
 
-    selectedAllergies = selectedAllergies.filter(a => a.id !== id);
+    selectedDiets = selectedDiets.filter(d => d.id !== id);
 
     renderTags();
     loadResidents();
 }
 
-function onAllergySearch(e) {
+
+function onDietSearch(e) {
     const dropdown = document.getElementById("dropdown");
     const search = e.target.value.toLowerCase();
 
-    const matches = allergies.filter(a =>
-        a.name.toLowerCase().includes(search) &&
-        !selectedAllergies.some(sel => sel.id === a.id)
+    const matches = diets.filter(d =>
+        d.name.toLowerCase().includes(search) &&
+        !selectedDiets.some(sel => sel.id === d.id)
     );
 
     dropdown.innerHTML = "";
     dropdown.style.display = matches.length ? "block" : "none";
 
-    matches.forEach(a => {
+    matches.forEach(d => {
         const item = document.createElement("div");
         item.className = "dropdown-item";
-        item.textContent = a.name;
+        item.textContent = d.name;
 
         item.addEventListener("click", async () => {
-            await addAllergyToResident(a);
+            await addDietToResident(d);
 
-            selectedAllergies.push(a);
+            selectedDiets.push(d);
             renderTags();
-
             dropdown.style.display = "none";
             e.target.value = "";
         });
@@ -150,7 +148,7 @@ function onAllergySearch(e) {
 }
 
 function closeDropdown(e) {
-    const searchInput = document.getElementById("allergySearch");
+    const searchInput = document.getElementById("dietSearch");
     const dropdown = document.getElementById("dropdown");
 
     if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
@@ -158,37 +156,39 @@ function closeDropdown(e) {
     }
 }
 
-async function addAllergyToResident(allergy) {
-    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
+
+async function addDietToResident(diet) {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
         credentials: "include",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({name: allergy.name})
+        body: JSON.stringify({name: diet.name})
     });
 
     await loadResidents();
-    await loadAllergies()
+    await loadDiets();
 }
 
-async function saveNewAllergy() {
+// Save new diet by typing text instead of selecting
+async function saveNewDiet() {
     if (!selectedResident) return;
 
-    const name = document.getElementById("allergySearch").value.trim();
-    if (!name) return alert("Skriv en allergi først");
+    const name = document.getElementById("dietSearch").value.trim();
+    if (!name) return alert("Skriv en diæt først");
 
-    await addAllergyToResident({name});
+    await addDietToResident({name});
 
-    selectedAllergies.push({name})
+    selectedDiets.push({name});
     renderTags();
-
 }
+
 
 function showAllTags() {
     const dropdown = document.getElementById("dropdown");
     dropdown.innerHTML = "";
 
-    const available = allergies.filter(a =>
-        !selectedAllergies.some(sel => sel.id === a.id)
+    const available = diets.filter(d =>
+        !selectedDiets.some(sel => sel.id === d.id)
     );
 
     if (available.length === 0) {
@@ -196,16 +196,16 @@ function showAllTags() {
         return;
     }
 
-    dropdown.style.display = "block"
+    dropdown.style.display = "block";
 
-    available.forEach(a => {
+    available.forEach(d => {
         const item = document.createElement("div");
         item.className = "dropdown-item";
-        item.textContent = a.name;
+        item.textContent = d.name;
 
         item.addEventListener("click", async () => {
-            await addAllergyToResident(a);
-            selectedAllergies.push(a);
+            await addDietToResident(d);
+            selectedDiets.push(d);
             renderTags();
             dropdown.style.display = "none";
         });
@@ -214,32 +214,29 @@ function showAllTags() {
     });
 }
 
-async function chooseAllergy(allergy) {
-    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
+
+async function chooseDiet(diet) {
+    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
-        headers: {"Conten-Type": "application/json"},
-        body: JSON.stringify({name: allergy.name})
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name: diet.name})
     });
 
-    selectedAllergies.push(allergy);
+    selectedDiets.push(diet);
     loadResidents();
 }
 
-function renderAllAllergies() {
-    const panel = document.getElementById("a");
+function renderAllDiets() {
+    const panel = document.getElementById("allAllergiesPanel");
     if (!panel) return;
-
     panel.innerHTML = "";
 
-    allergies.forEach(a => {
+    diets.forEach(d => {
         const item = document.createElement("div");
         item.className = "allergy-item";
-        item.textContent = a.name;
-
-        item.addEventListener("click", () => chooseAllergy(a));
+        item.textContent = d.name;
+        item.addEventListener("click", () => chooseDiet(d));
 
         panel.appendChild(item);
-    })
-
+    });
 }
-
