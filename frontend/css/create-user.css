@@ -1,7 +1,18 @@
-/* ===== Layout (samme som resten af systemet) ===== */
 html, body {
     height: 100%;
     margin: 0;
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+ {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
 }
 
 body {
@@ -13,7 +24,6 @@ body {
     flex-direction: column;
 }
 
-/* ===== Main – centrerer indhold ===== */
 main {
     flex: 1;
     display: flex;
@@ -22,7 +32,6 @@ main {
     padding-bottom: 2%;
 }
 
-/* ===== Card / Box ===== */
 #form-box {
     background: #ffffff;
     padding: 32px;
@@ -35,7 +44,6 @@ main {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* ===== Formular-elementer ===== */
 #form-box input,
 #form-box select {
     width: 100%;
@@ -53,7 +61,6 @@ main {
     margin-bottom: 8px;
 }
 
-/* ===== Knap ===== */
 #form-box button {
     width: 100%;
     padding: 10px;
@@ -72,7 +79,6 @@ main {
     background: #357ab8;
 }
 
-/* ===== Fejlbesked ===== */
 #error-message {
     margin-bottom: 12px;
     font-size: 14px;
