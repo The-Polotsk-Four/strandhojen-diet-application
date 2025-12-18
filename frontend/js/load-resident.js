@@ -156,10 +156,6 @@ function enableEditMode(resident) {
     </select>
 `;
 
-
-
-
-
     document.getElementById("floor").innerHTML = `
     <span class="label">Etage:</span>
     <select id="editFloor">
@@ -189,6 +185,12 @@ function enableEditMode(resident) {
 }
 
 async function saveResident(resident) {
+
+    // gets the new weight
+    const weight = document.getElementById("editWeight").value;
+    // calculates bmi with weight/height^2 divided by 100 to get meter instead of cm
+    const bmi = weight/((resident.height/100) ** 2);
+
     const updatedResident = {
         ...resident,
         weight: Number(document.getElementById("editWeight").value),
@@ -196,7 +198,8 @@ async function saveResident(resident) {
         floor: Number(document.getElementById("editFloor").value),
         comment: document.getElementById("editComment").value,
         status: document.getElementById("editStatus").value,
-        FoodConsistency: document.getElementById("editFoodConsistency").value
+        FoodConsistency: document.getElementById("editFoodConsistency").value,
+        bmi: bmi
     };
 
     const resp = await fetch(`http://localhost:8080/api/residents/update/${residentId}`, {
