@@ -1,6 +1,7 @@
 package dk.polotsk.backend.common;
 
 import dk.polotsk.backend.Catalog.model.*;
+import dk.polotsk.backend.Catalog.repository.AllergyRepository;
 import dk.polotsk.backend.Catalog.repository.ResidentRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,9 +14,11 @@ import java.util.List;
 public class ResidentInitData implements CommandLineRunner {
 
     private final ResidentRepository residentRepository;
+    private final AllergyRepository allergyRepository;
 
-    public ResidentInitData(ResidentRepository residentRepository) {
+    public ResidentInitData(ResidentRepository residentRepository, AllergyRepository allergyRepository) {
         this.residentRepository = residentRepository;
+        this.allergyRepository = allergyRepository;
     }
 
     @Override
@@ -48,23 +51,27 @@ public class ResidentInitData implements CommandLineRunner {
         vegetarian.setName("vegetar");
         dietList.add(vegetarian);
 
-        List<Allergies> allergiesList = new ArrayList<>();
+//        List<Allergies> allergiesList = new ArrayList<>();
         Allergies nuts = new Allergies();
 //        nuts.setId(1L);
         nuts.setName("nødder");
-        allergiesList.add(nuts);
+//        allergiesList.add(nuts);
         Allergies lactose = new Allergies();
 //        lactose.setId(2L);
         lactose.setName("laktose");
-        allergiesList.add(lactose);
+//        allergiesList.add(lactose);
         Allergies gluten = new Allergies();
 //        gluten.setId(3L);
         gluten.setName("gluten");
-        allergiesList.add(gluten);
+//        allergiesList.add(gluten);
         Allergies shellfish = new Allergies();
 //        shellfish.setId(4L);
         shellfish.setName("skaldyr");
-        allergiesList.add(shellfish);
+//        allergiesList.add(shellfish);
+        allergyRepository.save(nuts);
+        allergyRepository.save(lactose);
+        allergyRepository.save(gluten);
+        allergyRepository.save(shellfish);
 
         Resident resident01 = new Resident();
         resident01.setName("Lars");
@@ -72,7 +79,7 @@ public class ResidentInitData implements CommandLineRunner {
         resident01.setWeight(69.00);
         resident01.setHeight(169.00);
         resident01.calculateBmi();
-//        resident01.addAllergy(nuts);
+        resident01.addAllergy(nuts);
         resident01.setFloor(1);
         resident01.setRoomNumber(101);
         resident01.setComment("Kan ikke lide tomater, og bliver sur hvis du siger han er gammel");
@@ -117,8 +124,8 @@ public class ResidentInitData implements CommandLineRunner {
         resident05.setWeight(80.00);
         resident05.setHeight(178.00);
         resident05.calculateBmi();
-//        resident02.addAllergy(gluten);
-//        resident02.addAllergy(lactose);
+        resident05.addAllergy(gluten);
+        resident05.addAllergy(lactose);
 //        resident02.addDiet(vegetarian);
 //        resident04.addPreference(banana);
         resident05.setFloor(2);
@@ -132,6 +139,7 @@ public class ResidentInitData implements CommandLineRunner {
         resident06.setWeight(99.00);
         resident06.setHeight(169.00);
         resident06.calculateBmi();
+        resident06.addAllergy(shellfish);
         resident06.setFloor(1);
         resident06.setRoomNumber(102);
         residentRepository.save(resident06);
@@ -142,6 +150,8 @@ public class ResidentInitData implements CommandLineRunner {
         resident07.setWeight(42.00);
         resident07.setHeight(150.00);
         resident07.calculateBmi();
+        resident07.addAllergy(nuts);
+        resident07.addAllergy(gluten);
         resident07.setFloor(3);
         resident07.setRoomNumber(302);
         residentRepository.save(resident07);
@@ -163,6 +173,10 @@ public class ResidentInitData implements CommandLineRunner {
         resident09.setWeight(78.00);
         resident09.setHeight(178.00);
         resident09.calculateBmi();
+        resident09.addAllergy(nuts);
+        resident09.addAllergy(gluten);
+        resident09.addAllergy(lactose);
+        resident09.addAllergy(shellfish);
         resident09.setFloor(1);
         resident09.setRoomNumber(105);
         residentRepository.save(resident09);
@@ -173,8 +187,9 @@ public class ResidentInitData implements CommandLineRunner {
         resident10.setWeight(99.00);
         resident10.setHeight(190.00);
         resident10.calculateBmi();
+        resident10.addAllergy(nuts);
         resident10.setFloor(2);
-        resident06.setFoodConsistency(FoodConsistency.TUBEFEEDING);
+        resident10.setFoodConsistency(FoodConsistency.TUBEFEEDING);
         resident10.setRoomNumber(203);
         residentRepository.save(resident10);
 
@@ -184,9 +199,10 @@ public class ResidentInitData implements CommandLineRunner {
         resident11.setWeight(76.00);
         resident11.setHeight(188.00);
         resident11.calculateBmi();
+        resident11.addAllergy(lactose);
+        resident11.addAllergy(gluten);
         resident11.setFloor(3);
         resident11.setRoomNumber(303);
-        residentRepository.save(resident09);
-
+        residentRepository.save(resident11);
     }
 }
