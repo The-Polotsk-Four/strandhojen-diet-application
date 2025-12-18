@@ -4,7 +4,7 @@ const floorSelector = document.querySelector("#floor-selector");
 const allergySelector = document.querySelector("#allergy-selector");
 let activeFloor = -1;
 let allergies;
-let selectedAllergies = [];
+let selectedAllergies;
 let residents;
 
 async function initApp() {
@@ -18,8 +18,10 @@ async function initApp() {
     await fetchAllergies();
     console.log(allergies);
 
-    renderResidents();
+    // renderResidents();
+    renderSelectableAllergies();
     renderAllergies();
+    document.querySelector("#floor-number").innerText = activeFloor;
     console.log("app initialized");
 }
 
@@ -32,16 +34,17 @@ async function fetchAllergies() {
         console.log("Error: " + response.status);
         return;
     }
-    allergies = await response.json()
+    allergies = await response.json();
+    selectedAllergies = allergies;
 }
 
-function renderAllergies() {
+function renderSelectableAllergies() {
     allergies.forEach(allergy => {
-        renderAllergy(allergy)
+        renderSelectableAllergy(allergy)
     });
 }
 
-function renderAllergy(allergy) {
+function renderSelectableAllergy(allergy) {
     const option = document.createElement("option");
     option.value = allergy.id;
     option.innerHTML = allergy.name;
@@ -49,20 +52,28 @@ function renderAllergy(allergy) {
 }
 
 function getAllergyValue() {
-    // console.log('allergy value:');
-    // console.log(allergySelector);
     selectedAllergies = [];
-    for (let option in allergySelector.selectedOptions) { 
-        const value = Number(allergySelector.selectedOptions[option].value);
-        if (value) {
-            allergies.forEach(allergy => {
-                if (allergy.id === value) {
-                    selectedAllergies.push(allergy);
-                }
-            });
+    console.log(allergySelector.selectedOptions.length);    
+    if (allergySelector.selectedOptions.length > 0) {
+        for (let option in allergySelector.selectedOptions) {
+            const value = Number(allergySelector.selectedOptions[option].value);
+            if (value) {
+                allergies.forEach(allergy => {
+                    if (allergy.id === value) {
+                        selectedAllergies.push(allergy);
+                    }
+                });
+            }
         }
+    } else {
+        selectedAllergies = allergies;
     }
+    
     console.log(selectedAllergies);
+    document.querySelector("#solid-table").innerHTML = '';
+    document.querySelector("#soft-table").innerHTML = '';
+    document.querySelector("#tube-table").innerHTML = '';
+    renderAllergies();
 }
 
 function getAllergies(resident) {
@@ -77,6 +88,106 @@ function getAllergies(resident) {
     // console.log(resident.name);
     // console.log('has allergies');
     // console.log(hasAllergies);
+}
+
+function renderAllergies() {
+    let solidFoodAllergies = [];
+    let softFoodAllergies = [];
+    let tubeCounter = 0;
+    let residentCounter = 0;
+    residents.forEach(resident => {
+        if (activeFloor === -1 || resident.floor === activeFloor) {
+            const allergyNameArray = separateAllergyNamesIntoArray(resident);
+            // console.log(resident.name);
+            // console.log(allergyNameArray);
+
+            // arrayOfSortedAllergies = arrayOfSortedAllergies.concat(allergyNameArray);
+
+            if (allergyNameArray.length > 0) {
+                // arrayOfSortedAllergies.push(allergyNameArray);
+                // const row = document.createElement("tr");
+                // allergyNameArray.forEach(allergy => row.appendChild(renderAllergyCell(allergy)));
+                // appendRowToRightFloor(resident, row);
+                switch (resident.FoodConsistency) {
+                    case "SOLID":
+                        solidFoodAllergies.push(allergyNameArray);
+                        break;
+                    case "SOFTFOOD":
+                        softFoodAllergies.push(allergyNameArray);
+                        break;
+                }
+            }
+            
+            if (resident.FoodConsistency === "TUBEFEEDING") {
+                tubeCounter++;
+            }
+            residentCounter++;
+        }
+    });
+
+    console.log('allergies');
+    console.log(solidFoodAllergies);
+    console.log(softFoodAllergies);
+    
+    countAllergies(solidFoodAllergies)
+        .sort((a, b) => a.allergy.localeCompare(b.allergy))
+        .forEach(allergy => {
+            const row = document.createElement("tr");
+            row.appendChild(renderCell(allergy.allergy));
+            row.appendChild(renderCell(allergy.count));
+
+            document.querySelector("#solid-table").append(row);
+        });
+    countAllergies(softFoodAllergies)
+        .sort((a, b) => a.allergy.localeCompare(b.allergy))
+        .forEach(allergy => {
+            const row = document.createElement("tr");
+            row.appendChild(renderCell(allergy.allergy));
+            row.appendChild(renderCell(allergy.count));
+
+            document.querySelector("#soft-table").append(row);
+        });
+
+    const row = document.createElement("tr");
+    row.appendChild(renderCell(tubeCounter));
+    document.querySelector("#tube-table").append(row);
+    
+    document.querySelector("#resident-counter").innerText = residentCounter;
+}
+
+function renderAllergyCell(allergy) {
+    const cell = document.createElement("td");
+    cell.textContent = allergy;
+    return cell;
+}
+
+function separateAllergyNamesIntoArray(resident) {
+    let allergyNameArray = [];
+    resident.allergies.forEach(allergy => {
+        selectedAllergies.forEach(selectedAllergy =>
+            (allergy.id === selectedAllergy.id) ? allergyNameArray.push(allergy.name) : 'nothing');
+    });
+    // console.log(allergyNameArray);
+    return allergyNameArray;
+}
+
+function countAllergies(allergiesArray) {
+    const count = allergiesArray.reduce((accumulator, current) => {
+        accumulator[current] = (accumulator[current] || 0) + 1;
+        return accumulator;
+    }, {});
+
+    // console.log('count');
+    // console.log(count);
+    
+    const toArray = Object.entries(count)
+        // .filter(([key, value]) => value > 1)
+        .map(([key, value]) => ({ allergy: key, count: value}));
+
+    console.log('duplicate');
+    console.log(toArray);
+    
+    return toArray;
 }
 
 async function fetchResidents() {
@@ -101,13 +212,23 @@ function renderResidents() {
 
 function renderResident(resident) {
     const row = document.createElement("tr");
-    row.appendChild(renderResidentCell(resident.name));
-    row.appendChild(renderResidentCell(resident.FoodConsistency));
-    row.appendChild(renderResidentCell(resident.floor));
-    row.appendChild(renderResidentCell(resident.allergies));
+    row.appendChild(renderCell(resident.name));
+    row.appendChild(renderCell(resident.FoodConsistency));
+    row.appendChild(renderCell(resident.floor));
+    row.appendChild(renderCell(resident.allergies));
     
     getAllergies(resident);
     
+    // appendRowToRightFloor(resident, row);
+}
+
+function renderCell(value) {
+    const cell = document.createElement("td");
+    cell.textContent = value;
+    return cell;
+}
+
+function appendRowToRightFloor(resident, row) {
     if (activeFloor === -1 || resident.floor === activeFloor) {
         switch (resident.FoodConsistency) {
             case "SOLID":
@@ -122,12 +243,6 @@ function renderResident(resident) {
     }
 }
 
-function renderResidentCell(value) {
-    const cell = document.createElement("td");
-    cell.textContent = value;
-    return cell;
-}
-
 function getFloorValue(event) {
     activeFloor = Number(floorSelector.value);
     console.log(activeFloor);
@@ -135,6 +250,8 @@ function getFloorValue(event) {
     document.querySelector("#solid-table").innerHTML = '';
     document.querySelector("#soft-table").innerHTML = '';
     document.querySelector("#tube-table").innerHTML = '';
+    document.querySelector("#floor-number").innerText = activeFloor;
+    renderAllergies();
     renderResidents();
     
     console.log(event.target);
