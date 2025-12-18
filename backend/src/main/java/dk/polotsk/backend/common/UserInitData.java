@@ -35,7 +35,7 @@ public class UserInitData implements CommandLineRunner {
 
         User user2 = new User();
         user2.setName("test");
-        user2.setLogin("sygeplejer");
+        user2.setLogin("dla-christoffer@hotmail.com");
         user2.setPassword(passwordEncoder.encode("test"));
         user2.setUserrole(Userrole.SYGEPLEJERSKE);
 

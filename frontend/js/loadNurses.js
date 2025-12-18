@@ -1,6 +1,6 @@
 export async function loadNurses() {
     const select = document.getElementById("nurse");
-    const response = await fetch("http://localhost:8080/api/users/sygeplejersker");
+    const response = await fetch("http://localhost:8080/api/users/sygeplejersker ");
     credentials: 'include'
     if (!response.ok) return;
     const nurse = await response.json();

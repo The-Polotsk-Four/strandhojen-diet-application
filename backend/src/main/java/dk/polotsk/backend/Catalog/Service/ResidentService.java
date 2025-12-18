@@ -33,7 +33,7 @@ public class ResidentService {
         Resident existing = residentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resident not found"));
         existing.setName(dto.name());
-        existing.setFoodConsistency(dto.FoodConsistency());
+        existing.setFoodConsistency(dto.foodConsistency());
         existing.setAge(dto.age());
         existing.setWeight(dto.weight());
         existing.setHeight(dto.height());

@@ -15,13 +15,13 @@
 <body>
 <div class="form-box">
     <h1>Opret Beboer</h1>
-    <form id="createForm" onsubmit="opretBeboer(event)">
+    <form id="createForm">
 
         <label> Fornavn </label>
         <input type="text" id="name" required />
 
         <label>Alder (YYYY-MM-DD)</label>
-        <input type="text" id="age" required />
+        <input type="date" id="age" required />
 
         <label>Vægt</label>
         <input type="number" id="weight" />
@@ -36,10 +36,10 @@
         <input type="number" id="roomNumber" required />
 
         <label>Fødevarens konsistens</label>
-        <select id="foodConsistency" required>
-            <option value="SOLID">Solid</option>
-            <option value="SOFTFOOD">Softfood</option>
-            <option value="TUBEFEEDING">Tubefeeding</option>
+        <select id="foodConsistency">
+            <option value="SOLID">Fast</option>
+            <option value="SOFTFOOD">Blendet</option>
+            <option value="TUBEFEEDING">Flydende</option>
         </select>
 
         <label>Preference (komma-separeret)</label>
@@ -56,7 +56,7 @@
 
         <label>Vælg sygeplejerske</label>
         <select id="nurse" required>
-            <option value="option">-- Vælg sygeplejerske --</option>
+            <option value="">-- Vælg sygeplejerske --</option>
         </select>
 
         <button type="submit">Opret</button>

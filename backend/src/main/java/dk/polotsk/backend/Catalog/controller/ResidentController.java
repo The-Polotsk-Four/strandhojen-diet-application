@@ -23,12 +23,12 @@ public class ResidentController {
     private final EmailSenderService emailSenderService;
     private final NotificationService notificationService;
 
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notficationService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notificationService) {
     this.residentService = residentService;
         this.allergyRepository = allergyRepository;
         this.allergyService = allergyService;
         this.emailSenderService = emailSenderService;
-        this.notificationService = notficationService;
+        this.notificationService = notificationService;
     }
 
     @PostMapping("/create")
@@ -36,13 +36,14 @@ public class ResidentController {
             @RequestParam String nurseEmail,
             @RequestBody ResidentDto residentDto
     ) {
+        System.out.println("CREATE KALDT");
         ResidentDto saved = residentService.createResident(residentDto);
 
         notificationService.create(
                 "Ny beboer oprettet: " + saved.name() +
                         " (Stue " + saved.roomNumber() + ")"
         );
-
+        System.out.println("EMAIL SERVICE KALDT");
         emailSenderService.sendEmail(
                 nurseEmail,
                 "Ny beboer oprettet",
