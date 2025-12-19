@@ -11,7 +11,7 @@ import java.util.prefs.Preferences;
 public class Resident {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     public String getName() {
