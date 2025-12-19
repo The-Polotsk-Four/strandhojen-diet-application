@@ -15,9 +15,11 @@ public class Notification {
     private Long id;
 
     private String message;
-
+    
+    @Column(name = "is_read", nullable = false)
     private boolean read = false;
 
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Notification() {}
