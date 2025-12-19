@@ -16,10 +16,10 @@ public class Notification {
 
     private String message;
     
-    @Column(name = "is_read", nullable = false)
+    @Column(name = "is_read")
     private boolean read = false;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public Notification() {}
