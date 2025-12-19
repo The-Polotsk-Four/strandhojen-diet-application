@@ -1,5 +1,10 @@
 async function loadIndexNotifications() {
-    const userResponse = await fetch("http://localhost:8080/api/users/current", {credentials: "include"});
+    const content = document.getElementById("notifications-content");
+
+    const userResponse = await fetch(
+        "http://localhost:8080/api/users/current",
+        { credentials: "include" }
+    );
 
     if (!userResponse.ok) return;
 
@@ -7,28 +12,49 @@ async function loadIndexNotifications() {
 
     if (user.userrole !== "SYGEPLEJERSKE") return;
 
-    const notificationResponse = await fetch("http://localhost:8080/api/notifications");
+    const notificationResponse = await fetch(
+        "http://localhost:8080/api/notifications",
+        { credentials: "include" }
+    );
+
+    if (!notificationResponse.ok) return;
+
     const notifications = await notificationResponse.json();
 
-    if (notifications.length === 0) return;
+    content.innerHTML = "";
 
-    const banner = document.getElementById("notification-banner");
-    const text = document.getElementById("notification-text");
+    if (notifications.length === 0) {
+        content.innerHTML = `<p class="empty">Ingen notifikationer</p>`;
+        return;
+    }
 
-    text.textContent = `Der er ${notifications.length} nye ændringer i systemet`;
+    notifications.forEach(n => {
+        const div = document.createElement("div");
+        div.className = "notification-item";
 
-    document.getElementById("close-notification").onclick = async (e) => {
-        e.stopPropagation();
+        div.innerHTML = `
+            <span>${n.message}</span>
+            <span class="notification-close">✖</span>
+        `;
 
-        for (const n of notifications) {
-            await fetch(`http://localhost:8080/api/notifications/${n.id}/read`, {
-                method: "PUT"
-                , credentials: "include"
-            });
-        }
+        div.querySelector(".notification-close").onclick = async () => {
+            await fetch(
+                `http://localhost:8080/api/notifications/${n.id}/read`,
+                {
+                    method: "PUT",
+                    credentials: "include"
+                }
+            );
 
-        banner.classList.add("hidden");
-    };
+            div.remove();
+
+            if (content.children.length === 0) {
+                content.innerHTML = `<p class="empty">Ingen notifikationer</p>`;
+            }
+        };
+
+        content.appendChild(div);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", loadIndexNotifications);
