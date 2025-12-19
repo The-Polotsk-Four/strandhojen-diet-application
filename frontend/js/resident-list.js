@@ -60,10 +60,16 @@ async function fetchResident() {
 
 function renderResidents(residents) {
     const tbody = document.getElementById("tbody-table");
-    tbody.textContent = ""; // ryd kun tbody
+    tbody.textContent = "";
+
+    residents.sort((a, b) => {
+        if (a.status === b.status) return 0;
+        return a.status ? -1 : 1;
+    });
 
     residents.forEach(resident => renderResident(resident));
 }
+
 
 function renderResident(resident) {
     const tbody = document.getElementById("tbody-table");

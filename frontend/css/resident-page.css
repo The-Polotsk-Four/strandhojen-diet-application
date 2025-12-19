@@ -40,3 +40,34 @@ body {
     border-radius: 5px;
 }
 
+#resident-container input[type="number"],
+#resident-container select,
+#resident-container textarea {
+    width: 100%;
+    padding: 6px 10px;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#resident-container textarea {
+    resize: vertical;
+    min-height: 60px;
+    font-family: inherit;
+}
+
+#resident-container button.btn {
+    color: white;
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+
