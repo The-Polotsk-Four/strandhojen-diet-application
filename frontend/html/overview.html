@@ -9,46 +9,51 @@
     <script src="../js/components/footer.js" type="text/javascript" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/overview.css">
 </head>
 <header-component></header-component>
 <body>
-    <div id="selectors">
-        <div>
-            <label for="floor-selector">Vælg etage:</label>
-            <select id="floor-selector">
-                <option value="" disabled selected>Vælg en etage</option>
-                <option value=0>Stue etage</option>
-                <option value=1>Første etage</option>
-                <option value=2>Anden etage</option>
-                <option value=3>Tredje etage</option>
-                <option value="-1" selected>Alle etager</option>
-            </select>
-        </div>
-        <div>
-            <label for="allergy-selector">Vælg allergi</label>
-            <select multiple id="allergy-selector">
+<main>
+    <div id ="form-box">
+        <div id="selectors">
+            <div>
+                <label for="floor-selector">Vælg etage:</label>
+                <select id="floor-selector">
+                    <option value="" disabled selected>Vælg en etage</option>
+                    <option value=0>Stue etage</option>
+                    <option value=1>Første etage</option>
+                    <option value=2>Anden etage</option>
+                    <option value=3>Tredje etage</option>
+                    <option value="-1" selected>Alle etager</option>
+                </select>
+            </div>
+            <div>
+                <label for="allergy-selector">Vælg allergi</label>
+                <select multiple id="allergy-selector">
 
-            </select>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h3>Etage:</h3>
-            <p id="floor-number"></p>
+                </select>
+            </div>
         </div>
         <div>
-            <h3>Antal beboere:</h3>
-            <p id="resident-counter"></p>
+            <div>
+                <h3>Etage:</h3>
+                <p id="floor-number"></p>
+            </div>
+            <div>
+                <h3>Antal beboere:</h3>
+                <p id="resident-counter"></p>
+            </div>
+        </div>
+        <div id="tables">
+            <h2>Solid føde:</h2>
+            <table id="solid-table"></table>
+            <h2>Blød føde:</h2>
+            <table id="soft-table"></table>
+            <h2>Tube føde:</h2>
+            <table id="tube-table"></table>
         </div>
     </div>
-    <div id="tables">
-        <h2>Solid føde</h2>
-        <table id="solid-table"></table>
-        <h2>Blød føde</h2>
-        <table id="soft-table"></table>
-        <h2>Tube føde</h2>
-        <table id="tube-table"></table>
-    </div>
+</main>
 </body>
 <footer-component></footer-component>
 </html>
