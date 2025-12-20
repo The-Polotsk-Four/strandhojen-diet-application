@@ -1,9 +1,9 @@
 name: push-ghcr.yml
 on:
   push:
-    branches: [ ghcr ]
+    branches: [ main ]
   pull_request:
-    branches: [ ghcr ]
+    branches: [ main ]
   workflow_dispatch:
 
 env:
