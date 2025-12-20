@@ -6,6 +6,7 @@
     <title>Opret Beboer</title>
     <script src ="../js/components/header.js" type="text/javascript" defer></script>
     <script src="../js/components/footer.js" type="text/javascript" defer></script>
+    <script src="../js/resident-create.js" type="module" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="/css/resident-create.css" />
@@ -14,13 +15,13 @@
 <body>
 <div class="form-box">
     <h1>Opret Beboer</h1>
-    <form id="createForm" onsubmit="opretBeboer(event)">
+    <form id="createForm">
 
         <label> Fornavn </label>
         <input type="text" id="name" required />
 
         <label>Alder (YYYY-MM-DD)</label>
-        <input type="text" id="age" required />
+        <input type="date" id="age" required />
 
         <label>Vægt</label>
         <input type="number" id="weight" />
@@ -35,10 +36,10 @@
         <input type="number" id="roomNumber" required />
 
         <label>Fødevarens konsistens</label>
-        <select id="foodConsistency" required>
-            <option value="SOLID">Solid</option>
-            <option value="SOFTFOOD">Softfood</option>
-            <option value="TUBEFEEDING">Tubefeeding</option>
+        <select id="foodConsistency">
+            <option value="SOLID">Fast</option>
+            <option value="SOFTFOOD">Blendet</option>
+            <option value="TUBEFEEDING">Flydende</option>
         </select>
 
         <label>Preference (komma-separeret)</label>
@@ -53,11 +54,15 @@
         <label>Kommentar</label>
         <textarea id="comment"></textarea>
 
+        <label>Vælg sygeplejerske</label>
+        <select id="nurse" required>
+            <option value="">-- Vælg sygeplejerske --</option>
+        </select>
+
         <button type="submit">Opret</button>
     </form>
     <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
 </div>
-<script src="/js/resident-create.js"></script>
 </body>
 <footer-component></footer-component>
 </html>
