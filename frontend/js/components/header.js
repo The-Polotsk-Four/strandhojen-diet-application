@@ -3,7 +3,7 @@ import { logout } from "../logout.js";
 class HeaderComponent extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-     <header className="header">
+     <header class="header">
     <nav>
         <ul>
             <li><a href="../html/index.html">Hjem</a></li>
@@ -17,16 +17,16 @@ class HeaderComponent extends HTMLElement {
             <li><a href="../html/overview.html">Oversigt af føde</a></li>
             <li><a href="../html/resident-add-allergies.html">Rediger allergier</a></li>
             <li><a href="../html/resident-diet.html">Rediger diæter</a></li>
-            <li>
-                 <a href="#" id="logout">Log ud</a>
-            </li>
-
+            <li><a href="#" id="logout">Log ud</a></li>
         </ul>
     </nav>
 </header>
     `;
 
-        this.querySelector("#logout").addEventListener("click", logout);
+        this.querySelector("#logout").addEventListener("click", (e) => {
+            e.preventDefault();
+            logout();
+        });
     }
 }
 

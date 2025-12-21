@@ -36,8 +36,9 @@ async function loadResidents() {
 
 async function loadAllergies() {
     try {
-        const res = await fetch(`${BASE_URL}/api/allergies`);
-        allergies = await res.json();
+        const res = await fetch(`${BASE_URL}/api/allergies`, {
+            credentials: "include"
+        });
     } catch {
         console.error("Kunne ikke hente allergier");
     }
@@ -108,9 +109,13 @@ function renderTags() {
 }
 
 async function removeTag(id) {
-    await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeAllergy/${id}`, {
-        method: "DELETE"
-    });
+    await fetch(
+        `${BASE_URL}/api/residents/update/${selectedResident.id}/removeAllergy/${id}`,
+        {
+            method: "DELETE",
+            credentials: "include"   // ⭐ VIGTIG
+        }
+    );
 
     selectedAllergies = selectedAllergies.filter(a => a.id !== id);
 
@@ -217,7 +222,7 @@ function showAllTags() {
 async function chooseAllergy(allergy) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
         method: "PUT",
-        headers: {"Conten-Type": "application/json"},
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({name: allergy.name})
     });
 
