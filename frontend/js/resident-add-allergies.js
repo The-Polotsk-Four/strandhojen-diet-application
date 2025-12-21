@@ -222,6 +222,7 @@ function showAllTags() {
 async function chooseAllergy(allergy) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addAllergy`, {
         method: "PUT",
+        credentials: "include",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({name: allergy.name})
     });
