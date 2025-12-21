@@ -9,7 +9,7 @@ async function initApp(){
 }
 
 
-async function logout(e) {
+export async function logout(e) {
     e.preventDefault();
 
     const resp = await fetch(logoutUrl, {

@@ -25,7 +25,9 @@ async function initApp() {
 
 async function loadResident(user) {
 
-    const resp = await fetch(getResidentUrl);
+    const resp = await fetch(getResidentUrl, {
+        credentials: "include"
+    });
 
     if (!resp.ok) {
         console.error("Cant find resident");
@@ -56,13 +58,13 @@ function renderResident(resident, user) {
         `<span class="label">Vægt:</span> ${resident.weight} kg`;
 
     let consistency;
-    if (resident.FoodConsistency === "SOLID") {
+    if (resident.foodConsistency === "SOLID") {
         consistency = "Fast føde";
     }
-    if (resident.FoodConsistency === "TUBEFEEDING") {
+    if (resident.foodConsistency === "TUBEFEEDING") {
         consistency = "Sondemad"
     }
-    if (resident.FoodConsistency === "SOFTFOOD") {
+    if (resident.foodConsistency === "SOFTFOOD") {
         consistency = "Blød kost"
     }
 
@@ -150,9 +152,9 @@ function enableEditMode(resident) {
     document.getElementById("food").innerHTML = `
     <span class="label">Mad Konsistens:</span>
     <select id="editFoodConsistency">
-        <option value="SOLID" ${resident.FoodConsistency === "SOLID" ? "selected" : ""}>Fast føde</option>
-        <option value="TUBEFEEDING" ${resident.FoodConsistency === "TUBEFEEDING" ? "selected" : ""}>Sondemad</option>
-        <option value="SOFTFOOD" ${resident.FoodConsistency === "SOFTFOOD" ? "selected" : ""}>Blød kost</option>
+        <option value="SOLID" ${resident.foodConsistency === "SOLID" ? "selected" : ""}>Fast føde</option>
+        <option value="TUBEFEEDING" ${resident.foodConsistency === "TUBEFEEDING" ? "selected" : ""}>Sondemad</option>
+        <option value="SOFTFOOD" ${resident.foodConsistency === "SOFTFOOD" ? "selected" : ""}>Blød kost</option>
     </select>
 `;
 
@@ -201,12 +203,13 @@ async function saveResident(resident) {
         floor: Number(document.getElementById("editFloor").value),
         comment: document.getElementById("editComment").value,
         status: document.getElementById("editStatus").value,
-        FoodConsistency: document.getElementById("editFoodConsistency").value,
+        foodConsistency: document.getElementById("editFoodConsistency").value,
         bmi: bmi
     };
 
     const resp = await fetch(`http://localhost:8080/api/residents/update/${residentId}`, {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedResident)
     });

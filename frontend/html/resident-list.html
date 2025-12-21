@@ -6,10 +6,18 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="../css/resident-list.css">
+    <script src ="../js/components/header.js" type="module" defer></script>
+    <script src="../js/components/footer.js" type="text/javascript" defer></script>
 
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <script src="../js/resident-list.js" type="text/javascript" defer></script>
+    <script src="../js/logged-in.js" type="module"></script>
+
 </head>
 <body>
+<header-component></header-component>
+
 <div id="resident-div">
     <form id="resident-form">
         <p>Søg efter beboer: </p><br>
@@ -35,6 +43,9 @@
         </tbody>
     </table>
 </div>
+
+<footer-component></footer-component>
+
 
 </body>
 </html>
