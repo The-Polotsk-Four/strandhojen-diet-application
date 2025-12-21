@@ -7,7 +7,10 @@ async function sletBeboer(event) {
 
     if (!confirm(`Er du sikker på du vil slette beboer med ID ${id}?`)) return;
 
-    const res = await fetch(`${API}/delete/${id}`, { method: "DELETE" });
+    const res = await fetch(`${API}/delete/${id}`, {
+        method: "DELETE",
+        credentials: "include"
+    });
     if (!res.ok) return alert("Fejl ved sletning");
 
     alert("Beboer slettet!");

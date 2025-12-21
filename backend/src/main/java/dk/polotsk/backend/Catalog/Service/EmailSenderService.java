@@ -24,7 +24,7 @@ public class EmailSenderService {
 
         MailSender.send(message);
 
-        System.out.println("mail sendt til: " + toEmail + "succesfully");
+        System.out.println("mail sendt til: " + toEmail +" "+"succesfully");
     }
 
 }

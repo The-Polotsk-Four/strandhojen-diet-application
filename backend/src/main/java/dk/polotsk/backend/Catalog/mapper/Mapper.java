@@ -81,20 +81,21 @@ public class Mapper {
         Resident resident = new Resident();
         resident.setId(residentDto.id());
         resident.setName(residentDto.name());
-        resident.setFoodConsistency(residentDto.FoodConsistency());
+        resident.setFoodConsistency(residentDto.foodConsistency());
         resident.setAge(residentDto.age());
         resident.setWeight(residentDto.weight());
         resident.setHeight(residentDto.height());
         resident.setBmi(residentDto.bmi());
-        for (PreferenceDto preferenceDto : residentDto.preference()){
-            resident.addPreference(toEntity(preferenceDto));
+        if (residentDto.preference() != null) {
+            residentDto.preference().forEach(p -> resident.addPreference(toEntity(p)));
         }
-        for (DietDto dietDto : residentDto.diet()){
-            resident.addDiet(toEntity(dietDto));
+        if (residentDto.diet() != null) {
+            residentDto.diet().forEach(d -> resident.addDiet(toEntity(d)));
         }
-        for (AllergiesDto allergiesDto : residentDto.allergies()){
-            resident.addAllergy(toEntity(allergiesDto));
+        if (residentDto.allergies() != null) {
+            residentDto.allergies().forEach(a -> resident.addAllergy(toEntity(a)));
         }
+
         resident.setFloor(residentDto.floor());
         resident.setRoomNumber(residentDto.roomNumber());
         resident.setStatus(residentDto.status());

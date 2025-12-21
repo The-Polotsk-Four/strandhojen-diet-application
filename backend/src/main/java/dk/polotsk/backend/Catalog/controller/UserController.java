@@ -5,6 +5,7 @@ import dk.polotsk.backend.Catalog.Service.UserService;
 import dk.polotsk.backend.Catalog.dto.ErrorDto;
 import dk.polotsk.backend.Catalog.dto.UserCreateDto;
 import dk.polotsk.backend.Catalog.dto.UserDto;
+import dk.polotsk.backend.Catalog.model.Userrole;
 import dk.polotsk.backend.Catalog.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,5 +78,17 @@ public class UserController {
 
     }
 
+    @GetMapping("/sygeplejersker")
+    public List<UserDto> getSygeplejersker() {
+        return userRepository.findByUserrole(Userrole.SYGEPLEJERSKE)
+                .stream()
+                .map(user -> new UserDto(
+                        user.getId(),
+                        user.getUserrole(),
+                        user.getLogin(),
+                        user.getName()
+                ))
+                .toList();
+    }
 
 }

@@ -3,8 +3,9 @@ main {
     margin: 0;
     background: #f7f7f7;
     display: flex;
-    justify-content: center; /* center entire layout */
-    padding-top: 40px;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #resident-container {
@@ -15,6 +16,8 @@ main {
     max-width: 900px;
     border: 1px solid #ddd;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 .row {
@@ -70,4 +73,10 @@ main {
     transition: background-color 0.2s ease;
 }
 
-
+header-component {
+    width: 100%;
+}
+footer-component {
+    width: 100%;
+    margin-top: auto;
+}

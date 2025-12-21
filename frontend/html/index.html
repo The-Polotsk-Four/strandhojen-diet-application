@@ -4,17 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Index</title>
-    <script src ="../js/components/header.js" type="text/javascript" defer></script>
+    <script src ="../js/components/header.js" type="module" defer></script>
     <script src="../js/components/footer.js" type="text/javascript" defer></script>
+    <script src="../js/index-notifications.js" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/index.css">
-
+    <script src="../js/logged-in.js" type="module"></script>
 </head>
 <header-component></header-component>
 <body>
 <h1>Diæt program for Strandhøjen</h1>
 <main></main>
+<main class="page-content">
+
+    <section id="notification-section">
+        <h2>Notifikationer</h2>
+
+        <div id="notification-box">
+            <div id="notifications-content">
+                <p class="empty">Ingen notifikationer</p>
+            </div>
+        </div>
+    </section>
+
+    <h1>Velkommen til diæt programmet</h1>
+
+</main>
+
+
+
+
 </body>
 <footer-component></footer-component>
 </html>

@@ -1,6 +1,7 @@
 package dk.polotsk.backend.Catalog.controller;
-
+import dk.polotsk.backend.Catalog.Service.EmailSenderService;
 import dk.polotsk.backend.Catalog.Service.AllergyService;
+import dk.polotsk.backend.Catalog.Service.NotificationService;
 import dk.polotsk.backend.Catalog.Service.DietService;
 import dk.polotsk.backend.Catalog.Service.ResidentService;
 import dk.polotsk.backend.Catalog.dto.AllergiesDto;
@@ -9,6 +10,7 @@ import dk.polotsk.backend.Catalog.dto.ResidentDto;
 import dk.polotsk.backend.Catalog.exception.NotFoundException;
 import dk.polotsk.backend.Catalog.model.Diet;
 import dk.polotsk.backend.Catalog.repository.AllergyRepository;
+import dk.polotsk.backend.Catalog.repository.NotificationRepository;
 import dk.polotsk.backend.Catalog.repository.DietRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,21 +24,42 @@ public class ResidentController {
     private final ResidentService residentService;
     private final AllergyRepository allergyRepository;
     private final AllergyService allergyService;
+    private final EmailSenderService emailSenderService;
+    private final NotificationService notificationService;
     private final DietRepository dietRepository;
     private final DietService dietService;
 
-    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, DietRepository dietRepository, DietService dietService) {
+    public ResidentController(ResidentService residentService, AllergyRepository allergyRepository, AllergyService allergyService, EmailSenderService emailSenderService, NotificationService notificationService, DietRepository dietRepository, DietService dietService) {
     this.residentService = residentService;
         this.allergyRepository = allergyRepository;
         this.allergyService = allergyService;
+        this.emailSenderService = emailSenderService;
+        this.notificationService = notificationService;
         this.dietRepository = dietRepository;
         this.dietService = dietService;
     }
 
-@PostMapping("/create")
-    public ResponseEntity<ResidentDto> create(@RequestBody ResidentDto residentDto){
-    return ResponseEntity.ok(residentService.createResident(residentDto));
-}
+
+    @PostMapping("/create")
+    public ResponseEntity<ResidentDto> create(
+            @RequestParam String nurseEmail,
+            @RequestBody ResidentDto residentDto
+    ) {
+        System.out.println("CREATE KALDT");
+        ResidentDto saved = residentService.createResident(residentDto);
+
+        notificationService.create(
+                "Ny beboer oprettet: " + saved.name() +
+                        " (Stue " + saved.roomNumber() + ")"
+        );
+        System.out.println("EMAIL SERVICE KALDT");
+        emailSenderService.sendEmail(
+                nurseEmail,
+                "Ny beboer oprettet",
+                "Der er oprettet en ny beboer: " + saved.name()
+        );
+        return ResponseEntity.ok(saved);
+    }
 
 @PutMapping("/update/{id}")
     public ResponseEntity<ResidentDto> update(
