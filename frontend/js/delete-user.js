@@ -16,7 +16,9 @@ async function initApp() {
 }
 
 async function fetchUsers() {
-    const resp = await fetch(BASE_USER_URL);
+    const resp = await fetch(BASE_USER_URL, {
+        credentials: "include",
+    });
 
     if (!resp.ok) {
         console.error("Fetch error:", resp.status);
@@ -34,7 +36,9 @@ async function searchUsers() {
     }
 
     try {
-        const resp = await fetch(`${BASE_USER_URL}?login=${text}`);
+        const resp = await fetch(`${BASE_USER_URL}?login=${text}`, {
+            credentials: "include",
+        });
 
         if (!resp.ok) throw new Error();
 
@@ -82,6 +86,7 @@ async function deleteUser(id) {
         return;
 
     const resp = await fetch(`${BASE_USER_URL}/${id}`, {
+        credentials: "include",
         method: "DELETE"
     });
 

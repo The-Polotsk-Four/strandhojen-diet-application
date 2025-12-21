@@ -23,6 +23,7 @@ async function opdaterBeboer(event) {
 
     const res = await fetch(`${API}/update/${id}`, {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(resident)
     });

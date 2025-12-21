@@ -38,7 +38,9 @@ async function loadResidents() {
 
 async function loadDiets() {
     try {
-        const res = await fetch(`${BASE_URL}/api/diets`);
+        const res = await fetch(`${BASE_URL}/api/diets`, {
+            credentials: "include",
+        });
         diets = await res.json();
     } catch {
         console.error("Kunne ikke hente diæter");
@@ -107,7 +109,8 @@ function renderTags() {
 
 async function removeTag(id) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/removeDiet/${id}`, {
-        method: "DELETE"
+        method: "DELETE",
+        credentials: "include"
     });
 
     selectedDiets = selectedDiets.filter(d => d.id !== id);
@@ -218,6 +221,7 @@ function showAllTags() {
 async function chooseDiet(diet) {
     await fetch(`${BASE_URL}/api/residents/update/${selectedResident.id}/addDiet`, {
         method: "PUT",
+        credentials: "include",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({name: diet.name})
     });

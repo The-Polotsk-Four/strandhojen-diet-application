@@ -33,6 +33,7 @@ async function login(e) {
         alert("Invalid username or password");
         return
     }
+    window.location.href = "index.html";
 
 
     const data = await resp.json();

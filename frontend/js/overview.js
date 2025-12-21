@@ -108,7 +108,7 @@ function renderAllergies() {
                 // const row = document.createElement("tr");
                 // allergyNameArray.forEach(allergy => row.appendChild(renderAllergyCell(allergy)));
                 // appendRowToRightFloor(resident, row);
-                switch (resident.FoodConsistency) {
+                switch (resident.foodConsistency) {
                     case "SOLID":
                         solidFoodAllergies.push(allergyNameArray);
                         break;
@@ -118,7 +118,7 @@ function renderAllergies() {
                 }
             }
             
-            if (resident.FoodConsistency === "TUBEFEEDING") {
+            if (resident.foodConsistency === "TUBEFEEDING") {
                 tubeCounter++;
             }
             residentCounter++;
@@ -213,7 +213,7 @@ function renderResidents() {
 function renderResident(resident) {
     const row = document.createElement("tr");
     row.appendChild(renderCell(resident.name));
-    row.appendChild(renderCell(resident.FoodConsistency));
+    row.appendChild(renderCell(resident.foodConsistency));
     row.appendChild(renderCell(resident.floor));
     row.appendChild(renderCell(resident.allergies));
     
@@ -230,7 +230,7 @@ function renderCell(value) {
 
 function appendRowToRightFloor(resident, row) {
     if (activeFloor === -1 || resident.floor === activeFloor) {
-        switch (resident.FoodConsistency) {
+        switch (resident.foodConsistency) {
             case "SOLID":
                 document.querySelector("#solid-table").append(row);
                 break;
