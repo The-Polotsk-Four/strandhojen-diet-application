@@ -113,7 +113,7 @@ async function removeTag(id) {
         `${BASE_URL}/api/residents/update/${selectedResident.id}/removeAllergy/${id}`,
         {
             method: "DELETE",
-            credentials: "include"   // ⭐ VIGTIG
+            credentials: "include"
         }
     );
 
