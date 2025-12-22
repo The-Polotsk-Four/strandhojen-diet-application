@@ -13,8 +13,19 @@ header img {
 
 nav ul {
     list-style: none;
+    display: flex;
+    gap: 16px;
     margin: 0;
     padding: 0;
-    display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #222;
+    font-weight: 500;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }

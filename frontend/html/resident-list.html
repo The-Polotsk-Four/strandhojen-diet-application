@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
-
-    <link rel="stylesheet" href="../css/resident-list.css">
     <script src ="../js/components/header.js" type="module" defer></script>
-    <script src="../js/components/footer.js" type="text/javascript" defer></script>
-
+    <script src="../js/components/footer.js" type="module" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/resident-list.css">
+
     <script src="../js/resident-list.js" type="text/javascript" defer></script>
     <script src="../js/logged-in.js" type="module"></script>
 
 </head>
 <body>
 <header-component></header-component>
-
+<main>
 <div id="resident-div">
     <form id="resident-form">
         <p>Søg efter beboer: </p><br>
@@ -25,8 +24,6 @@
         <button id="button" type="submit">Søg</button>
     </form>
 </div>
-
-
 <div>
     <table id="residentTable">
         <thead>
@@ -43,9 +40,7 @@
         </tbody>
     </table>
 </div>
-
+</main>
 <footer-component></footer-component>
-
-
 </body>
 </html>

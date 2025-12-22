@@ -4,41 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Document</title>
-
-    <link rel="stylesheet" href="../css/resident-page.css">
+    <script src ="../js/components/header.js" type="module" defer></script>
+    <script src="../js/components/footer.js" type="module" defer></script>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <script src ="../js/components/header.js" type="module" defer></script>
-    <script src="../js/components/footer.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" href="../css/resident-page.css">
 
     <script src="../js/load-resident.js" type="module" defer></script>
     <script src="../js/logged-in.js" type="module"></script>
 
 
 </head>
-
 <body>
 <header-component></header-component>
-
-
-<div id="resident-container">
-    <div id="name" class="row"></div>
-    <div id="age" class="row"></div>
-    <div id="bmi" class="row"></div>
-    <div id="height" class="row"></div>
-    <div id="weight" class="row"></div>
-    <div id="food" class="row"></div>
-    <div id="room" class="row"></div>
-    <div id="floor" class="row"></div>
-    <div id="status" class="row"></div>
-    <div id="allergies" class="row"></div>
-    <div id="diet" class="row"></div>
-    <div id="comment" class="row"></div>
-</div>
-
+<main>
+        <div id="resident-container">
+            <div id="name" class="row"></div>
+                <div id="age" class="row"></div>
+                <div id="bmi" class="row"></div>
+                <div id="height" class="row"></div>
+                <div id="weight" class="row"></div>
+                <div id="food" class="row"></div>
+                <div id="room" class="row"></div>
+                <div id="floor" class="row"></div>
+                <div id="status" class="row"></div>
+                <div id="allergies" class="row"></div>
+                <div id="diet" class="row"></div>
+                <div id="comment" class="row"></div>
+        </div>
+    </main>
 <footer-component></footer-component>
-
 </body>
-
-
 </html>

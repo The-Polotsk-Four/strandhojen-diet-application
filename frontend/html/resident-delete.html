@@ -14,16 +14,18 @@
 </head>
 <header-component></header-component>
 <body>
-<div class="form-box">
-    <h1>Slet Beboer</h1>
-    <form id="deleteForm" onsubmit="sletBeboer(event)">
-        <label>Beboer ID</label>
-        <input type="number" id="deleteId" required />
-        <button type="submit">Slet</button>
-    </form>
-    <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
-</div>
-<script src="../js/resident-delete.js"></script>
-</body>
+<main>
+    <div class="form-box">
+        <h1>Slet Beboer</h1>
+        <form id="deleteForm" onsubmit="sletBeboer(event)">
+            <label>Beboer ID</label>
+            <input type="number" id="deleteId" required />
+            <button type="submit">Slet</button>
+        </form>
+        <button onclick="window.location.href='resident-admin.html'">Tilbage til forsiden</button>
+    </div>
+    <script src="../js/resident-delete.js"></script>
+</main>
 <footer-component></footer-component>
+</body>
 </html>
